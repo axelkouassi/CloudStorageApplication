@@ -1,12 +1,18 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/login")
@@ -16,16 +22,12 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping()
-    public String signupUser(Model model){
-        String logoutError = null;
-        if (logoutError == null) {
-            model.addAttribute("param.logout", true);
-        } else {
-            logoutError = "Error logging you out!";
-            model.addAttribute("param.error",logoutError);
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-
-        return "login";
+        return "redirect:/login?logout";
     }
 }
