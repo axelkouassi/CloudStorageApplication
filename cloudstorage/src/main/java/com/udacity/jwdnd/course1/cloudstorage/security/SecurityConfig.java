@@ -29,12 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/signup", "/css/**", "/js/**","/h2-console/**").permitAll()
-                .anyRequest().authenticated()
-                /*.and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")*/;
+                .antMatchers("/signup", "/css/**", "/js/**","/h2/**").permitAll()
+                .anyRequest().authenticated();
 
         http.formLogin()
                 .loginPage("/login")
@@ -48,19 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         http.csrf()
-                .ignoringAntMatchers("/h2-console/**");
+                .ignoringAntMatchers("/h2/**");
         http.headers().frameOptions().sameOrigin();
-
-        /*http.csrf().disable();
-
-        http.logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .invalidateHttpSession(true)        // set invalidation state when logout
-                .and()
-                .exceptionHandling();*/
 
     }
 
