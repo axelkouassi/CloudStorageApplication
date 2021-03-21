@@ -7,6 +7,7 @@ public class Files {
     private String fileSize;
     private Integer userId;
     //filedata BLOB,
+    private byte[] fileData;
     //foreign key (userid) references USERS(userid)
 
     public Integer getFileId() {
@@ -48,4 +49,13 @@ public class Files {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    public byte[] getFileData() {
+        return fileData;
+    }
+
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
+    }
+
 }
