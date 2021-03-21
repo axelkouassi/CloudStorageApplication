@@ -20,7 +20,7 @@ public interface FileMapper {
     Files getFileByFileId(Integer fileId);
 
     @Select("SELECT * FROM FILES WHERE filename = #{fileName} AND userid = #{userId}")
-    Files getFileByFilenameAndUserId(String filename, Integer userId);
+    Files getFile(String filename, Integer userId);
 
     @Insert("INSERT INTO FILES (filename, contenttype, filesize, userid, filedata)" +
             "VALUES(#{fileName}, #{contentType}, #{fileSize}, #{userId}, #{fileData})")
