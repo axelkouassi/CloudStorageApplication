@@ -1,24 +1,82 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
-import com.udacity.jwdnd.course1.cloudstorage.model.Files;
-import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
-import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
-import org.springframework.core.io.ByteArrayResource;
+import com.udacity.jwdnd.course1.cloudstorage.services.storage.StorageFileNotFoundException;
+import com.udacity.jwdnd.course1.cloudstorage.services.storage.StorageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Controller
 public class FileController {
 
-    private final UserService userService;
+    private final StorageService storageService;
+
+    @Autowired
+    public FileController(StorageService storageService) {
+        this.storageService = storageService;
+    }
+
+    /*******************************************************************************
+     [GET /]: Looks up the current list of uploaded files from the StorageService and
+     loads it into a Thymeleaf template. It calculates a link to the actual resource
+     by using [MvcUriComponentsBuilder].
+     ********************************************************************************/
+    @GetMapping("/home/files")
+    public String listUploadedFiles(Model model) throws IOException {
+
+        model.addAttribute("fileUpload", storageService.loadAll()
+                .map(path -> MvcUriComponentsBuilder.
+                        fromMethodName(FileController.class, "serveFile",
+                                path.getFileName().toString())
+                        .build().toUri().toString())
+                .collect(Collectors.toList()));
+
+        return "home";
+    }
+
+    /*******************************************************************************
+     [GET /files/{filename}]: Loads the resource (if it exists) and sends it to the browser
+     to download by using a [Content-Disposition] response header.
+     ********************************************************************************/
+    @GetMapping("home/files/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+        Resource file = storageService.loadAsResource(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+    /******************************************************************************************
+     [POST /]: Handles a multi-part message file and gives it to the StorageService for saving.
+     *****************************************************************************************/
+    @PostMapping("/")
+    public String handleFileUpload(@RequestParam("fileUpload") MultipartFile file,
+                                   RedirectAttributes redirectAttributes) {
+
+        storageService.store(file);
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded " + file.getOriginalFilename() + "!");
+
+        return "redirect:/";
+    }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+        return ResponseEntity.notFound().build();
+    }
+
+    /*private final UserService userService;
     private final FileService fileService;
 
     public FileController(UserService userService, FileService fileService) {
@@ -88,7 +146,7 @@ public class FileController {
                 .headers(httpHeaders)
                 .body(resource);
 
-    }
+    }*/
 }
 
 
