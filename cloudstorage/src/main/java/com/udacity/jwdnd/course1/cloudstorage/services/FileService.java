@@ -1,5 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
+import com.udacity.jwdnd.course1.cloudstorage.mapper.FileMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.Files;
 import com.udacity.jwdnd.course1.cloudstorage.services.storage.StorageException;
 import com.udacity.jwdnd.course1.cloudstorage.services.storage.StorageFileNotFoundException;
 import com.udacity.jwdnd.course1.cloudstorage.services.storage.StorageProperties;
@@ -17,29 +19,62 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
-public class FileService implements StorageService {
+public class FileService /*implements StorageService*/ {
 
-    private final Path rootLocation;
-    //private FileMapper fileMapper;
+    //private final Path rootLocation;
+    private FileMapper fileMapper;
 
 
-    @Autowired
+    /*@Autowired
     public FileService(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());;
+    }*/
+
+    public FileService(FileMapper fileMapper) {
+
+        this.fileMapper = fileMapper;
     }
 
-//    public FileService(FileMapper fileMapper) {
-//        this.fileMapper = fileMapper;
-//    }
+    public Integer createFile(MultipartFile uploadFile, Integer userid) throws IOException {
+        Files file = new Files();
+        file.setFileName(uploadFile.getOriginalFilename());
+        file.setContentType(uploadFile.getContentType());
+        file.setFileSize(String.valueOf(uploadFile.getSize()));
+        file.setUserId(userid);
+        file.setFileData(uploadFile.getBytes());
 
-//    public boolean isFilenameAvailable(String fileName, Integer userId) {
-//        return (this.fileMapper.getFile(fileName, userId) == null);
-//    }
+        return fileMapper.insert(file);
+    }
 
-    // Initialize storage
+    public Integer uploadFile(Files file) {
+
+        return fileMapper.insert(file);
+    }
+
+    public List<Files> getFilesByUserId(Integer id) {
+
+        return this.fileMapper.getFilesByUserId(id);
+    }
+
+    public Files getFileByFileId(Integer id) {
+
+        return this.fileMapper.getFileByFileId(id);
+    }
+
+    public int deleteFile(Files file, Integer userid) {
+        file.setUserId(userid);
+        return fileMapper.delete(file);
+    }
+
+    public boolean isFilenameAvailable(String fileName, Integer userId) {
+        return ((this.fileMapper.getFile(fileName, userId) == null) ? false : true);
+    }
+
+    /*// Initialize storage
     @Override
     public void init() {
         try {
@@ -118,34 +153,12 @@ public class FileService implements StorageService {
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
-    }
-
-    /*public Integer createFile(MultipartFile uploadFile, Integer userid) throws IOException {
-        Files file = new Files();
-        file.setFileName(uploadFile.getOriginalFilename());
-        file.setContentType(uploadFile.getContentType());
-        file.setFileSize(String.valueOf(uploadFile.getSize()));
-        file.setUserId(userid);
-        file.setFileData(uploadFile.getBytes());
-
-        return fileMapper.insert(file);
-    }
-
-    public Integer uploadFile(Files file) {
-        return fileMapper.insert(file);
-    }
-
-    public List<Files> getFilesByUserId(Integer id) {
-        return this.fileMapper.getFilesByUserId(id);
-    }
-
-    public Files getFileByFileId(Integer id) {
-        return this.fileMapper.getFileByFileId(id);
-    }
-
-    public int deleteFile(Files file, Integer userid) {
-        file.setUserId(userid);
-        return fileMapper.delete(file);
     }*/
+
+
+
+
+
+
 
 }
