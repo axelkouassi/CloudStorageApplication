@@ -34,7 +34,7 @@ public class FileController {
 
     @PostMapping("/home/file")
     public ModelAndView uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile,
-                                   Authentication authentication, Model model) throws IOException{
+                                   Authentication authentication, Model model) throws IOException {
 
         User user = this.userService.getUser(authentication.getName());
         Integer userId = user.getUserId();
@@ -51,12 +51,24 @@ public class FileController {
             fileService.createFile(multipartFile, userId);
             model.addAttribute("success", true);
             model.addAttribute("message", "New file added successfully!");
+            return new ModelAndView("home");
         } catch (Exception e) {
             model.addAttribute("error", true);
             model.addAttribute("message", "Error adding file!" + e.getMessage());
         }
+
+        //Checking if filename already exists
+        if(fileService.isFilenameAvailable(multipartFile.getOriginalFilename(),userId)) {
+
+            model.addAttribute("success", false);
+            model.addAttribute("error", true);
+            model.addAttribute("message", "file name already exists!");
+            return new ModelAndView("home");
+        }
+
         return new ModelAndView("home");
     }
+
 
     @PostMapping("home/file/delete")
     public ModelAndView deleteFile(@ModelAttribute Files fileDelete, Authentication authentication, Model model) {
