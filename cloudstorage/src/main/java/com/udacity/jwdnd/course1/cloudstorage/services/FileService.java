@@ -25,7 +25,7 @@ public class FileService {
         Files file = new Files();
         file.setFileName(uploadFile.getOriginalFilename());
         file.setContentType(uploadFile.getContentType());
-        file.setFileSize(String.valueOf(uploadFile.getSize()));
+        file.setFileSize(uploadFile.getSize());
         file.setUserId(userid);
         file.setFileData(uploadFile.getBytes());
 
