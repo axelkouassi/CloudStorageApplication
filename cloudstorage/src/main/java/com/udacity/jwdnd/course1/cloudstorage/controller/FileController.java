@@ -46,22 +46,26 @@ public class FileController {
                 return "redirect:/home";
             }
 
+            //Checking if filename already exists
+            if(fileService.isFilenameAvailable(file.getOriginalFilename(),currentUserId)) {
+                redirectAttributes.addAttribute("error", true);
+                redirectAttributes.addAttribute("message", "File name already exists!");
+                return "redirect:/home";
+            }
+
             Integer fileId = fileService.store(file, currentUserId);
 
             if(fileId > 0){
-                //Checking if filename already exists
-                if(fileService.isFilenameAvailable(file.getOriginalFilename(),currentUserId)) {
-                    redirectAttributes.addAttribute("error", true);
-                    redirectAttributes.addAttribute("message", "File name already exists!");
-                    return "redirect:/home";
-                }
+                redirectAttributes.addAttribute("success", true);
                 redirectAttributes.addFlashAttribute("message",
                         "You successfully uploaded " + file.getOriginalFilename() + "!");
             } else{
+                redirectAttributes.addAttribute("error", true);
                 redirectAttributes.addFlashAttribute("message",
                         "There was an error uploading your file. " + file.getOriginalFilename() + "!");
             }
         } catch (IOException ioException){
+            redirectAttributes.addAttribute("error", true);
             redirectAttributes.addFlashAttribute("message",
                     "There was an error uploading your file. " + file.getOriginalFilename() + "!");
         }
