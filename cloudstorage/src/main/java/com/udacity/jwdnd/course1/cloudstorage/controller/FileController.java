@@ -38,8 +38,23 @@ public class FileController {
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
 
         try {
+
+            //Display error message if no file uploaded
+            if (file.isEmpty()) {
+                redirectAttributes.addAttribute("error", true);
+                redirectAttributes.addAttribute("message", "Please, choose a file to upload!");
+                return "redirect:/home";
+            }
+
             Integer fileId = fileService.store(file, currentUserId);
+
             if(fileId > 0){
+                //Checking if filename already exists
+                if(fileService.isFilenameAvailable(file.getOriginalFilename(),currentUserId)) {
+                    redirectAttributes.addAttribute("error", true);
+                    redirectAttributes.addAttribute("message", "File name already exists!");
+                    return "redirect:/home";
+                }
                 redirectAttributes.addFlashAttribute("message",
                         "You successfully uploaded " + file.getOriginalFilename() + "!");
             } else{

@@ -46,8 +46,8 @@ public class FileService {
         return fileMapper.delete(file);
     }
 
-    /*public boolean isFilenameAvailable(String fileName, Integer userId) {
+    public boolean isFilenameAvailable(String fileName, Integer userId) {
         return ((this.fileMapper.getFile(fileName, userId) == null) ? false : true);
-    }*/
+    }
 
 }
