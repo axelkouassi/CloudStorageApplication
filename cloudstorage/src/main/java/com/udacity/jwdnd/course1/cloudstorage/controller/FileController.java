@@ -15,59 +15,45 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 @Controller
 public class FileController {
 
-    private final UserService userService;
     private final FileService fileService;
+    private final UserService userService;
 
+
+    @Autowired
     public FileController(UserService userService, FileService fileService) {
         this.userService = userService;
         this.fileService = fileService;
     }
 
-    @PostMapping("/home/file")
-    public ModelAndView uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile,
-                                   Authentication authentication, Model model) throws IOException {
+    @PostMapping("/home/files")
+    public String uploadFile(@RequestParam("fileUpload") MultipartFile file,
+                             RedirectAttributes redirectAttributes, Authentication authentication){
 
-        User user = this.userService.getUser(authentication.getName());
-        Integer userId = user.getUserId();
-
-        //Display error message if no file uploaded
-        if (multipartFile.isEmpty()) {
-            model.addAttribute("success", false);
-            model.addAttribute("error", true);
-            model.addAttribute("message", "Please, choose a file to upload!");
-            return new ModelAndView("home");
-        }
+        Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
 
         try {
-            fileService.createFile(multipartFile, userId);
-            model.addAttribute("success", true);
-            model.addAttribute("message", "New file added successfully!");
-            return new ModelAndView("home");
-        } catch (Exception e) {
-            model.addAttribute("error", true);
-            model.addAttribute("message", "Error adding file!" + e.getMessage());
+            Integer fileId = fileService.store(file, currentUserId);
+            if(fileId > 0){
+                redirectAttributes.addFlashAttribute("message",
+                        "You successfully uploaded " + file.getOriginalFilename() + "!");
+            } else{
+                redirectAttributes.addFlashAttribute("message",
+                        "There was an error uploading your file. " + file.getOriginalFilename() + "!");
+            }
+        } catch (IOException ioException){
+            redirectAttributes.addFlashAttribute("message",
+                    "There was an error uploading your file. " + file.getOriginalFilename() + "!");
         }
 
-        //Checking if filename already exists
-        if(fileService.isFilenameAvailable(multipartFile.getOriginalFilename(),userId)) {
-
-            model.addAttribute("success", false);
-            model.addAttribute("error", true);
-            model.addAttribute("message", "file name already exists!");
-            return new ModelAndView("home");
-        }
-
-        return new ModelAndView("home");
+        return "redirect:/home";
     }
+
 
 
     @PostMapping("home/file/delete")

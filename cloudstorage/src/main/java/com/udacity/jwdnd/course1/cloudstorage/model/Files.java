@@ -4,11 +4,21 @@ public class Files {
     private Integer fileId;
     private String fileName;
     private String contentType;
-    private long fileSize;
+    private Long fileSize;
     private Integer userId;
     //filedata BLOB,
     private byte[] fileData;
     //foreign key (userid) references USERS(userid)
+
+    public Files(Integer fileId, String fileName, String contentType, Long fileSize,
+                 Integer userId, byte[] fileData) {
+        this.fileId = fileId;
+        this.fileName = fileName;
+        this.contentType = contentType;
+        this.fileSize = fileSize;
+        this.userId = userId;
+        this.fileData = fileData;
+    }
 
     public Integer getFileId() {
         return fileId;
@@ -34,11 +44,11 @@ public class Files {
         this.contentType = contentType;
     }
 
-    public long getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(long fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 

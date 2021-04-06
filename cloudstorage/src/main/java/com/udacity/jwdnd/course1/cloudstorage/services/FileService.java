@@ -4,32 +4,30 @@ import com.udacity.jwdnd.course1.cloudstorage.mapper.FileMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.Files;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.List;
 
 @Service
 public class FileService {
 
-    private FileMapper fileMapper;
+    private final FileMapper fileMapper;
 
     public FileService(FileMapper fileMapper) {
 
         this.fileMapper = fileMapper;
     }
 
-    public boolean isFilenameAvailable(String fileName, Integer userId) {
-        return ((this.fileMapper.getFile(fileName, userId) == null) ? false : true);
-    }
-
-    public Integer createFile(MultipartFile uploadFile, Integer userid) throws IOException {
-        Files file = new Files();
-        file.setFileName(uploadFile.getOriginalFilename());
-        file.setContentType(uploadFile.getContentType());
-        file.setFileSize(uploadFile.getSize());
-        file.setUserId(userid);
-        file.setFileData(uploadFile.getBytes());
+    public Integer store(MultipartFile multipartFile, Integer userId) throws IOException {
+        Files file = new Files(null, multipartFile.getOriginalFilename(), multipartFile.getContentType(),
+                multipartFile.getSize(), userId, multipartFile.getBytes());
 
         return fileMapper.insert(file);
+    }
+
+    public List<Files> getFilesForUser(Integer userId) {
+
+        return fileMapper.getFilesByUserId(userId);
     }
 
     public Integer uploadFile(Files file) {
@@ -37,10 +35,6 @@ public class FileService {
         return fileMapper.insert(file);
     }
 
-    public List<Files> getFilesByUserId(Integer id) {
-
-        return this.fileMapper.getFilesByUserId(id);
-    }
 
     public Files getFileByFileId(Integer id) {
 
@@ -51,5 +45,9 @@ public class FileService {
         file.setUserId(userid);
         return fileMapper.delete(file);
     }
+
+    /*public boolean isFilenameAvailable(String fileName, Integer userId) {
+        return ((this.fileMapper.getFile(fileName, userId) == null) ? false : true);
+    }*/
 
 }
