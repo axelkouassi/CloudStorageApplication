@@ -73,6 +73,34 @@ public class FileController {
         return "redirect:/home";
     }
 
+    @GetMapping("home/files/view/{fileId}")
+    public ResponseEntity<Resource> download(@PathVariable("fileId") Integer fileId,
+                                             RedirectAttributes redirectAttributes,
+                                             Authentication authentication) {
+
+        Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
+
+        Files file = fileService.getFileByFileId(fileId);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(httpHeaders.CONTENT_DISPOSITION, "inline; " +
+                "filename = " + file.getFileName());
+        httpHeaders.add("Cache-control", "no-cache, no-store, must-revalidate");
+        httpHeaders.add("Pragma", "no-cache");
+        httpHeaders.add("Expires", "0");
+        ByteArrayResource resource = new ByteArrayResource(file.getFileData());
+
+        redirectAttributes.addAttribute("success", true);
+
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully downloaded " + file.getFileName() + "!");
+
+        return ResponseEntity.ok().
+                headers(httpHeaders).
+                body(resource);
+
+
+    }
+
 
 
     @PostMapping("home/file/delete")
@@ -91,21 +119,7 @@ public class FileController {
 
     }
 
-    @GetMapping("home/file/download/{fileId}")
-    public ResponseEntity<Resource> download(@PathVariable("fileId") Integer fileId) {
-        Files file = fileService.getFileByFileId(fileId);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(httpHeaders.CONTENT_DISPOSITION, "attachment; filename = " + file.getFileName());
-        httpHeaders.add("Cache-control", "no-cache, no-store, must-revalidate");
-        httpHeaders.add("Pragma", "no-cache");
-        httpHeaders.add("Expires", "0");
-        ByteArrayResource resource = new ByteArrayResource(file.getFileData());
 
-        return ResponseEntity.ok()
-                .headers(httpHeaders)
-                .body(resource);
-
-    }
 }
 
 
