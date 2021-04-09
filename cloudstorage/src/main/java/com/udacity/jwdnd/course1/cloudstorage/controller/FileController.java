@@ -57,16 +57,16 @@ public class FileController {
 
             if(fileId > 0){
                 redirectAttributes.addAttribute("success", true);
-                redirectAttributes.addFlashAttribute("message",
+                redirectAttributes.addAttribute("message",
                         "You successfully uploaded " + file.getOriginalFilename() + "!");
             } else{
                 redirectAttributes.addAttribute("error", true);
-                redirectAttributes.addFlashAttribute("message",
+                redirectAttributes.addAttribute("message",
                         "There was an error uploading your file. " + file.getOriginalFilename() + "!");
             }
         } catch (IOException ioException){
             redirectAttributes.addAttribute("error", true);
-            redirectAttributes.addFlashAttribute("message",
+            redirectAttributes.addAttribute("message",
                     "There was an error uploading your file. " + file.getOriginalFilename() + "!");
         }
 
@@ -91,7 +91,7 @@ public class FileController {
 
         redirectAttributes.addAttribute("success", true);
 
-        redirectAttributes.addFlashAttribute("message",
+        redirectAttributes.addAttribute("message",
                 "You successfully downloaded " + file.getFileName() + "!");
 
         return ResponseEntity.ok().
