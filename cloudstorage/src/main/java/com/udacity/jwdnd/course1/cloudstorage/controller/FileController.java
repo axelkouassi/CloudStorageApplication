@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -74,48 +75,44 @@ public class FileController {
     }
 
     @GetMapping("home/files/view/{fileId}")
-    public ResponseEntity<Resource> download(@PathVariable("fileId") Integer fileId,
-                                             RedirectAttributes redirectAttributes,
-                                             Authentication authentication) {
-
-        Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
+    public ResponseEntity viewFile(@PathVariable("fileId") Integer fileId) {
 
         Files file = fileService.getFileByFileId(fileId);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(httpHeaders.CONTENT_DISPOSITION, "inline; " +
-                "filename = " + file.getFileName());
-        httpHeaders.add("Cache-control", "no-cache, no-store, must-revalidate");
-        httpHeaders.add("Pragma", "no-cache");
-        httpHeaders.add("Expires", "0");
-        ByteArrayResource resource = new ByteArrayResource(file.getFileData());
 
-        redirectAttributes.addAttribute("success", true);
+        String fileName = file.getFileName();
 
-        redirectAttributes.addAttribute("message",
-                "You successfully downloaded " + file.getFileName() + "!");
-
-        return ResponseEntity.ok().
-                headers(httpHeaders).
-                body(resource);
-
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(file.getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
+                .body(file.getFileData());
 
     }
 
 
 
-    @PostMapping("home/file/delete")
-    public ModelAndView deleteFile(@ModelAttribute Files fileDelete, Authentication authentication, Model model) {
-        User user = this.userService.getUser(authentication.getName());
-        Integer userId = user.getUserId();
+    @PostMapping("home/files/delete/{fileId}")
+    public String deleteFile(@ModelAttribute Files file,
+                                   RedirectAttributes redirectAttributes,
+                                   Authentication authentication) {
+
+        Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
+
         try {
-            fileService.deleteFile(fileDelete, userId);
-            model.addAttribute("success", true);
-            model.addAttribute("message", "file Deleted!");
+
+            fileService.deleteFile(file, currentUserId);
+            redirectAttributes.addAttribute("success", true);
+            redirectAttributes.addAttribute("message", "File " +
+                    file.getFileName() + " successfully deleted!");
+
         } catch (Exception e) {
-            model.addAttribute("error", true);
-            model.addAttribute("message", "Error deleting file!" + e.getMessage());
+
+            redirectAttributes.addAttribute("error", true);
+            redirectAttributes.addAttribute("message",
+                    "There was an error deleting your file " +
+                            fileService.getFileByName(file.getFileName(),currentUserId) + "!");
         }
-        return new ModelAndView("result");
+
+        return "redirect:/home";
 
     }
 
