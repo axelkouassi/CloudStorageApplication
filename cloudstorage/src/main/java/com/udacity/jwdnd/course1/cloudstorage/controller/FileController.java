@@ -101,15 +101,15 @@ public class FileController {
 
             fileService.deleteFile(file, currentUserId);
             redirectAttributes.addAttribute("success", true);
-            redirectAttributes.addAttribute("message", "File " +
-                    file.getFileName() + " successfully deleted!");
+            redirectAttributes.addAttribute("message", "You successfully deleted " +
+                    file.getFileId() + " !");
 
         } catch (Exception e) {
 
             redirectAttributes.addAttribute("error", true);
             redirectAttributes.addAttribute("message",
                     "There was an error deleting your file " +
-                            fileService.getFileByName(file.getFileName(),currentUserId) + "!");
+                            fileService.getFileByName(file.getFileId()) + "!");
         }
 
         return "redirect:/home";

@@ -19,6 +19,9 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE fileId = #{fileId}")
     Files getFileByFileId(Integer fileId);
 
+    @Select("SELECT * FROM FILES WHERE filename = #{fileName}")
+    String getFileByName(Integer fileId);
+
     @Select("SELECT * FROM FILES WHERE filename = #{fileName} AND userid = #{userId}")
     Files getFile(String fileName, Integer userId);
 
