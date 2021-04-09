@@ -90,7 +90,7 @@ public class FileController {
 
 
 
-    @PostMapping("home/files/delete/{fileId}")
+    @PostMapping("home/files/delete")
     public String deleteFile(@ModelAttribute Files file,
                                    RedirectAttributes redirectAttributes,
                                    Authentication authentication) {
