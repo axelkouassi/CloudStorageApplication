@@ -90,7 +90,7 @@ public class FileController {
 
 
 
-    @PostMapping("home/files/delete")
+    @PostMapping("home/files/delete/{fileId}")
     public String deleteFile(@ModelAttribute Files file,
                                    RedirectAttributes redirectAttributes,
                                    Authentication authentication) {
@@ -108,8 +108,8 @@ public class FileController {
 
             redirectAttributes.addAttribute("error", true);
             redirectAttributes.addAttribute("message",
-                    "There was an error deleting your file " +
-                            fileService.getFileByName(file.getFileId()) + "!");
+                            "There was an error deleting your file " +
+                                    fileService.getFileByName(file.getFileId()) + "!");
         }
 
         return "redirect:/home";
