@@ -41,14 +41,14 @@ public class FileService {
         return this.fileMapper.getFileByFileId(id);
     }
 
-    public String getFileByName(Integer fileId) {
+    public Files getFileByName(Integer fileId) {
 
-        return this.fileMapper.getFileByName(fileId);
+        return this.fileMapper.getFileByFileId(fileId);
     }
 
-    public int deleteFile(Files file, Integer userid) {
-        file.setUserId(userid);
-        return fileMapper.delete(file);
+    public int deleteFile(Integer fileId, Integer userid) {
+        //file.setUserId(userid);
+        return fileMapper.delete(fileId);
     }
 
     public boolean isFilenameAvailable(String fileName, Integer userId) {

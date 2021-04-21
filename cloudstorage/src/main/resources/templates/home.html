@@ -58,7 +58,11 @@
                                 <tr th:each="file : ${files}">
                                     <td>
                                         <a th:href="@{'home/files/view/' + ${file.fileId}}"target="_blank" class="btn btn-success">View</a>
-                                        <a th:href="@{'home/files/delete/' + ${file.fileId}}" class="btn btn-danger" >Delete</a>
+                                        <a th:href="@{'home/files/delete/' + ${file.fileId}}" class="btn btn-danger" method="post">Delete</a>
+                                        <!--<form class="delete-form" th:action="@{'home/files/delete/' + ${file.fileId}}" th:object="${deleteFile}" method="post">
+                                            <input type="hidden" name="fileId" th:value="${file.fileId}" />
+                                            <input type="submit" value="Delete" class="btn btn-danger" />
+                                        </form>-->
                                     </td>
                                     <th scope="row" th:text="${file.fileName}">ExampleFile.txt</th>
                                 </tr>
