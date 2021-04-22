@@ -74,6 +74,12 @@
                         <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
+                        <div class="alert alert-success fill-parent" th:if="${param.success}">
+                            <span id="success-message2" th:text="${param.message}">Success Message</span>
+                        </div>
+                        <div class="alert alert-danger fill-parent" th:if="${param.error}">
+                            <span id="error-message2" th:text="${param.message}">Error Message</span>
+                        </div>
 
                         <div class="table-responsive">
                             <table class="table table-striped" id="userTable">

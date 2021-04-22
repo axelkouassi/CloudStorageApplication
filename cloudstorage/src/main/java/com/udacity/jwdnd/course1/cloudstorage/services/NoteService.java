@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public class NoteService {
+
     private NoteMapper noteMapper;
 
     public int createNote(Notes note) {
