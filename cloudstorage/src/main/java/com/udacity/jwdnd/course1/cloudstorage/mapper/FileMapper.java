@@ -19,6 +19,9 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE fileId = #{fileId}")
     Files getFileByFileId(Integer fileId);
 
+    @Select("SELECT filename = #{fileName} FROM FILES WHERE  fileId = #{fileId}")
+    Files getFileByName(Integer fileId);
+
     @Select("SELECT * FROM FILES WHERE filename = #{fileName} AND userid = #{userId}")
     Files getFile(String fileName, Integer userId);
 
@@ -31,7 +34,7 @@ public interface FileMapper {
             "userId = #{userId}, filedata = #{fileData} where fileId = #{fileId}")
     Integer update(Files file);
 
-    @Delete("DELETE FROM FILES WHERE fileId = #{fileId} AND userid = #{userId}")
+    @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")/*AND userid = #{userId}*/
     int delete(Integer fileId);
 }
 

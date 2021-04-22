@@ -96,20 +96,23 @@ public class FileController {
                                    Authentication authentication) {
 
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
+        String fileName = null;
 
         try {
 
+            Files file = fileService.getFileByFileId(fileId);
+            fileName = file.getFileName();
             fileService.deleteFile(fileId, currentUserId);
             redirectAttributes.addAttribute("success", true);
             redirectAttributes.addAttribute("message", "You successfully deleted " +
-                     " !");
+                     fileName + " !");
 
         } catch (Exception e) {
 
             redirectAttributes.addAttribute("error", true);
             redirectAttributes.addAttribute("message",
                             "There was an error deleting your file " +
-                                     "!");
+                                    fileName + "!");
         }
 
         return "redirect:/home";

@@ -41,9 +41,9 @@ public class FileService {
         return this.fileMapper.getFileByFileId(id);
     }
 
-    public Files getFileByName(Integer fileId) {
+    public Files getFileByName(Integer fileId, Integer userid) {
 
-        return this.fileMapper.getFileByFileId(fileId);
+        return this.fileMapper.getFileByName(fileId);
     }
 
     public int deleteFile(Integer fileId, Integer userid) {
