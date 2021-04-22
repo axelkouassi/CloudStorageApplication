@@ -24,7 +24,7 @@ public class NoteController {
 
     @PostMapping("home/notes")
     public String createNote(@ModelAttribute Notes note,
-                           Authentication authentication, RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes, Authentication authentication) {
 
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
         note.setUserId(currentUserId);
@@ -35,18 +35,6 @@ public class NoteController {
                 redirectAttributes.addAttribute("success", true);
                 redirectAttributes.addAttribute("message", "New note " +
                         note.getNoteTitle() + "created!");
-                return "redirect:/home";
-            } else {
-                try{
-                    noteService.editNote(note);
-                    redirectAttributes.addAttribute("success", true);
-                    redirectAttributes.addAttribute("message", "Note " +
-                            note.getNoteTitle() + "modified!");
-                } catch (Exception d) {
-                    redirectAttributes.addAttribute("error", true);
-                    redirectAttributes.addAttribute("message", "Error editing note " +
-                            note.getNoteTitle() + "!");
-                }
             }
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -55,4 +43,17 @@ public class NoteController {
         }
         return "redirect:/home";
     }
+
+    /*else {
+        try{
+            noteService.editNote(note);
+            redirectAttributes.addAttribute("success", true);
+            redirectAttributes.addAttribute("message", "Note " +
+                    note.getNoteTitle() + "modified!");
+        } catch (Exception d) {
+            redirectAttributes.addAttribute("error", true);
+            redirectAttributes.addAttribute("message", "Error editing note " +
+                    note.getNoteTitle() + "!");
+        }
+    }*/
 }
