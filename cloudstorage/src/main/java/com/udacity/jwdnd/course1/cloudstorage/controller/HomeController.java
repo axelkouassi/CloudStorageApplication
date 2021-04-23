@@ -28,14 +28,6 @@ public class HomeController {
 
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
         model.addAttribute("files", fileService.getFilesForUser(currentUserId));
-
-        return "home";
-    }
-
-    @GetMapping()
-    public String noteView(Model model, Authentication authentication) {
-
-        Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
         model.addAttribute("notes", noteService.getNotesForUser(currentUserId));
 
         return "home";
