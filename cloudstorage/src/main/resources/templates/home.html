@@ -90,7 +90,8 @@
                                         <td>
                                             <button type="button" class="btn btn-success"
                                                     th:onclick="showNoteModal([[${note.noteId}]],
-                                                    [[${note.noteTitle}]], [[${note.noteDescription}]])">Edit</button>
+                                                    [[${note.noteTitle}]], [[${note.noteDescription}]])">Edit
+                                            </button>
                                             <a th:href="@{'home/notes/delete/' + ${note.noteId}}" method="POST"
                                                class="btn btn-danger">Delete</a>
                                         </td>

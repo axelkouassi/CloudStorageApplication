@@ -27,6 +27,8 @@ public class NoteController {
         this.userService = userService;
     }
 
+
+    //Create or edit note
     @PostMapping("home/notes")
     public String createNote(@ModelAttribute Notes note,
                              RedirectAttributes redirectAttributes, Authentication authentication) {
@@ -40,6 +42,21 @@ public class NoteController {
                 redirectAttributes.addAttribute("success", true);
                 redirectAttributes.addAttribute("message", "New note " +
                         note.getNoteTitle() + " created!");
+            }else {
+                try{
+                    noteService.editNote(note);
+                    redirectAttributes.addAttribute("success", true);
+                    redirectAttributes.addAttribute("message", "Note " +
+                            note.getNoteTitle() + " edited!");
+
+                    return "redirect:/home";
+                } catch (Exception e) {
+                    redirectAttributes.addAttribute("error", true);
+                    redirectAttributes.addAttribute("message", "Error editing note " +
+                            note.getNoteTitle() + "!");
+
+                    return "redirect:/home";
+                }
             }
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -50,8 +67,9 @@ public class NoteController {
     }
 
 
+    //Delete note
     @GetMapping("home/notes/delete/{noteId}")
-    public String deleteFile(@PathVariable("noteId") Integer noteId,
+    public String deleteNote(@PathVariable("noteId") Integer noteId,
                              RedirectAttributes redirectAttributes,
                              Authentication authentication) {
 
@@ -64,13 +82,13 @@ public class NoteController {
             noteTitle = note.getNoteTitle();
             noteService.deleteNote(noteId, currentUserId);
             redirectAttributes.addAttribute("success", true);
-            redirectAttributes.addAttribute("message", "You successfully deleted " + noteTitle + " !");
+            redirectAttributes.addAttribute("message", "You successfully deleted note" + noteTitle + " !");
 
         } catch (Exception e) {
 
             redirectAttributes.addAttribute("error", true);
             redirectAttributes.addAttribute("message",
-                    "There was an error deleting your file " +
+                    "There was an error deleting your note " +
                             noteTitle + "!");
         }
 
