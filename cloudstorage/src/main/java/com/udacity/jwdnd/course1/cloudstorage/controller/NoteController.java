@@ -30,7 +30,7 @@ public class NoteController {
 
     //Create or edit note
     @PostMapping("home/notes")
-    public String createNote(@ModelAttribute Notes note,
+    public String createOrEditNote(@ModelAttribute Notes note,
                              RedirectAttributes redirectAttributes, Authentication authentication) {
 
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
