@@ -23,8 +23,8 @@ public class NoteService {
         return this.noteMapper.getAllNotes();
     }
 
-    public List<Notes> getNotesByUserId(Integer userId) {
-        return this.noteMapper.getNotesByUserId(userId);
+    public List<Notes> getNotesForUser(Integer userId) {
+        return this.noteMapper.getNotesForUser(userId);
     }
 
     public List<Notes> getNoteByNoteId(Integer noteId) {
