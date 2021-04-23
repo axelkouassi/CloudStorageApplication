@@ -36,7 +36,7 @@ public class NoteController {
                 noteService.createNote(note);
                 redirectAttributes.addAttribute("success", true);
                 redirectAttributes.addAttribute("message", "New note " +
-                        note.getNoteTitle() + "created!");
+                        note.getNoteTitle() + " created!");
             }
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
