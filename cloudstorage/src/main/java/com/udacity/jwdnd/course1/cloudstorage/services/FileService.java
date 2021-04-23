@@ -47,7 +47,6 @@ public class FileService {
     }
 
     public int deleteFile(Integer fileId, Integer userid) {
-        //file.setUserId(userid);
         return fileMapper.delete(fileId);
     }
 
