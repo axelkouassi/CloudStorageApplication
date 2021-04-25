@@ -25,8 +25,9 @@ public class CredentialController {
         this.credentialService = credentialService;
     }
 
+    // Create or edit credentials
     @PostMapping("home/credentials")
-    public String addOrEditCredential(@ModelAttribute Credentials credential,
+    public String createOrEditCredential(@ModelAttribute Credentials credential,
                                 RedirectAttributes redirectAttributes, Authentication authentication) {
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
         credential.setUserId(currentUserId);
@@ -64,7 +65,7 @@ public class CredentialController {
         return "redirect:/home";
     }
 
-    //Delete note
+    //Delete Credentials
     @GetMapping("home/credentials/delete/{credentialId}")
     public String deleteNote(@PathVariable("credentialId") Integer credentialId,
                              RedirectAttributes redirectAttributes,
