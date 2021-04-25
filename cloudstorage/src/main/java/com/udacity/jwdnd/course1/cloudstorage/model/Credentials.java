@@ -7,6 +7,7 @@ public class Credentials {
     private String key;
     private String password;
     private Integer userId;
+    private String decriptedPassword;
     //foreign key (userid) references USERS(userid)
 
     public Integer getCredentialId() {
@@ -56,4 +57,16 @@ public class Credentials {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    public String getDecriptedPassword() {
+        return decriptedPassword;
+    }
+
+    public void setDecriptedPassword(String decriptedPassword) {
+        this.decriptedPassword = decriptedPassword;
+    }
+
+
+
+
 }

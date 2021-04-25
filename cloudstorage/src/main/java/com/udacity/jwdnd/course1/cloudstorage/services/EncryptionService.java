@@ -11,6 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
@@ -47,5 +48,13 @@ public class EncryptionService{
         }
 
         return new String(decryptedValue);
+    }
+
+    public String generateKey() {
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] key = new byte[16];
+        secureRandom.nextBytes(key);
+        String encodedKey = Base64.getEncoder().encodeToString(key);
+        return encodedKey;
     }
 }
