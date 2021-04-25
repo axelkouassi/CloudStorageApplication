@@ -98,6 +98,7 @@
                                         <th th:text="${note.noteTitle}" scope="row">Example Note Title</th>
                                         <td th:text="${note.noteDescription}">Example Note Description </td>
                                     </tr>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -207,6 +208,17 @@
 
         <!--For opening the note modal-->
         <script type="text/javascript">
+
+            // Tab redirecting
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            console.log("tab shown...");
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+            $('.nav-tabs a[href="' + activeTab + '"]').tab('show');
+            }
+
             // For opening the note modal
             function showNoteModal(noteId, noteTitle, noteDescription) {
                 $('#note-id').val(noteId ? noteId : '');
