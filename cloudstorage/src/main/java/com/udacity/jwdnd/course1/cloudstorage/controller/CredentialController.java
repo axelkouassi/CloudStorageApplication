@@ -42,7 +42,7 @@ public class CredentialController {
                     credentialService.editCredential(credential);
                     redirectAttributes.addAttribute("success", true);
                     redirectAttributes.addAttribute("message", "Credentials for " +
-                            credential.getUrl() + " edited!");
+                            credential.getUrl() + " have been edited!");
 
                     return "redirect:/home";
 
@@ -79,7 +79,7 @@ public class CredentialController {
             credentialUrl= credentials.getUrl();
             credentialService.deleteCredential(credentialId, currentUserId);
             redirectAttributes.addAttribute("success", true);
-            redirectAttributes.addAttribute("message", "You successfully deleted note credentials for "
+            redirectAttributes.addAttribute("message", "You successfully deleted credentials for "
                     + credentialUrl + " !");
 
         } catch (Exception e) {
