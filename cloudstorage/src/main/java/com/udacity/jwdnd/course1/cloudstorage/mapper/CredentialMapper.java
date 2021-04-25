@@ -27,7 +27,7 @@ public interface CredentialMapper {
     Credentials retrieveKeyByCredentialId(Integer credentialId);
 
     @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{username}, password = #{password} " +
-            "userid = #{userId} WHERE credentialid = #{credentialId}")
+            "userid = #{userId}, key = #{key} WHERE credentialid = #{credentialId}")
     int update(Credentials credential);
 
     @Delete("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialId}")

@@ -39,11 +39,11 @@ public class CredentialService {
         this.credentialMapper.delete(credentialId);
     }
 
-    public int editCredential(Credentials credential) {
+    public void editCredential(Credentials credential) {
         Credentials cred = this.credentialMapper.retrieveKeyByCredentialId(credential.getCredentialId());
         credential.setKey(cred.getKey());
         String encodedPassword = this.encryptionService.encryptValue(credential.getPassword(), credential.getKey());
         credential.setPassword(encodedPassword);
-        return this.credentialMapper.update(credential);
+        this.credentialMapper.update(credential);
     }
 }

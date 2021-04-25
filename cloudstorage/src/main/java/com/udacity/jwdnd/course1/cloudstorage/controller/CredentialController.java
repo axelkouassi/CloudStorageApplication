@@ -26,7 +26,7 @@ public class CredentialController {
     }
 
     @PostMapping("home/credentials")
-    public String addCredential(@ModelAttribute Credentials credential,
+    public String addOrEditCredential(@ModelAttribute Credentials credential,
                                 RedirectAttributes redirectAttributes, Authentication authentication) {
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
         credential.setUserId(currentUserId);
