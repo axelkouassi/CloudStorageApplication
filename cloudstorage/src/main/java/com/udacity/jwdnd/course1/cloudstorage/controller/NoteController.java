@@ -30,7 +30,7 @@ public class NoteController {
 
     //Create or edit note
     @PostMapping("home/notes")
-    public String createOrEditNote(@ModelAttribute Notes note,
+    public String createNote(@ModelAttribute Notes note,
                              RedirectAttributes redirectAttributes, Authentication authentication) {
 
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
@@ -42,21 +42,6 @@ public class NoteController {
                 redirectAttributes.addAttribute("success", true);
                 redirectAttributes.addAttribute("message", "New note " +
                         note.getNoteTitle() + " created!");
-            }else {
-                try{
-                    noteService.editNote(note);
-                    redirectAttributes.addAttribute("success", true);
-                    redirectAttributes.addAttribute("message", "Note " +
-                            note.getNoteTitle() + " edited!");
-
-                    return "redirect:/home";
-                } catch (Exception e) {
-                    redirectAttributes.addAttribute("error", true);
-                    redirectAttributes.addAttribute("message", "Error editing note " +
-                            note.getNoteTitle() + "!");
-
-                    return "redirect:/home";
-                }
             }
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -65,6 +50,27 @@ public class NoteController {
         }
         return "redirect:/home";
     }
+
+    //Edit note
+    @PostMapping("home/notes/edit")
+    public String editNote(@ModelAttribute Notes note,
+                           RedirectAttributes redirectAttributes, Authentication authentication) {
+        Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
+        note.setUserId(currentUserId);
+        try {
+            noteService.editNote(note);
+            redirectAttributes.addAttribute("success", true);
+            redirectAttributes.addAttribute("message", "Note " +
+                    note.getNoteTitle() + " edited!");
+            return "redirect:/home";
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("error", true);
+            redirectAttributes.addAttribute("message", "Error editing note " +
+                    note.getNoteTitle() + "!");
+            return "redirect:/home";
+        }
+    }
+
 
 
     //Delete note
