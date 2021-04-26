@@ -23,11 +23,11 @@ public interface CredentialMapper {
     Credentials getCredentials(String url, Integer userId);
 
 
-    @Select("SELECT * FROM CREDENTIALS WHERE key = #{key} AND credentialid = #{credentialid}")
+    @Select("SELECT * FROM CREDENTIALS WHERE credentialid = #{credentialId}")
     Credentials retrieveKeyByCredentialId(Integer credentialId);
 
-    @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{username}, password = #{password} " +
-            "userid = #{userId}, key = #{key} WHERE credentialid = #{credentialId}")
+    @Update("UPDATE CREDENTIALS SET url = #{url}, key = #{key}, password = #{password} " +
+            "username = #{username} WHERE credentialid = #{credentialId}")
     int update(Credentials credential);
 
     @Delete("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialId}")
