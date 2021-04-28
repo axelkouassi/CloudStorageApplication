@@ -33,6 +33,7 @@ public class HomeController {
     public String homeView(Model model, Authentication authentication) {
 
         Integer currentUserId = userService.getUser(authentication.getName()).getUserId();
+        //String currentUserPassword = encryptionService.decryptValue(authentication.getCredentials(),);
         model.addAttribute("files", fileService.getFilesForUser(currentUserId));
         model.addAttribute("notes", noteService.getNotesForUser(currentUserId));
         model.addAttribute("credentials", credentialService.getCredentialsForUser(currentUserId));
