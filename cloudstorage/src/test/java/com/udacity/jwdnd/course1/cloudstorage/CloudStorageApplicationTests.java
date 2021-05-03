@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
 
@@ -48,7 +50,7 @@ class CloudStorageApplicationTests {
 	@Test
 	public void testDisplayOfLoginPage() {
 		driver.get(baseURL + "/login");
-		Assertions.assertEquals("Login", driver.getTitle());
+		assertEquals("Login", driver.getTitle());
 	}
 
 	/*Write a test that verifies that an unauthorized user
@@ -56,42 +58,42 @@ class CloudStorageApplicationTests {
 	@Test
 	public void testUnauthorizedAccessRestrictions() throws InterruptedException{
 		driver.get(baseURL + "/home");
-		Assertions.assertEquals("Login", driver.getTitle());
+		assertEquals("Login", driver.getTitle());
 		Thread.sleep(2000);
 		driver.get(baseURL + "/signup");
-		Assertions.assertEquals("Sign Up", driver.getTitle());
+		assertEquals("Sign Up", driver.getTitle());
 	}
 
 	@Test
 	public void testUserSignUpLoginHomePageAccessLogOutHomePageRestrict()
 			throws InterruptedException{
 
-		String firstName = "testing";
-		String lastName = "testing";
-		String userName = "testing";
-		String password = "testing";
+		String firstName = "Bad Bitch";
+		String lastName = "Nicky";
+		String userName = "minaj";
+		String password = "sons";
 
 		driver.get(baseURL + "/signup");
 
 		SignUpPage signupPage = new SignUpPage(driver);
 		signupPage.signUp(firstName, lastName, userName, password);
 
-		Assertions.assertEquals(firstName, signupPage.getFirstNameField());
-		Assertions.assertEquals(lastName, signupPage.getLastNameField());
-		Assertions.assertEquals(userName, signupPage.getUsernameField());
-		Assertions.assertEquals(password, signupPage.getPasswordField());
+		assertEquals(firstName, signupPage.getFirstNameField());
+		assertEquals(lastName, signupPage.getLastNameField());
+		assertEquals(userName, signupPage.getUsernameField());
+		assertEquals(password, signupPage.getPasswordField());
 
-		Thread.sleep(30000);
+		Thread.sleep(300000);
 
 		driver.get(baseURL + "/login");
 
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(userName, password);
 
-		Assertions.assertEquals(userName, loginPage.getUsernameField());
-		Assertions.assertEquals(password, loginPage.getPasswordField());
+		assertEquals(userName, loginPage.getUsernameField());
+		assertEquals(password, loginPage.getPasswordField());
 
-		Assertions.assertEquals("Home", driver.getTitle());
+		assertEquals("Home", driver.getTitle());
 
 		Thread.sleep(5000);
 	}
