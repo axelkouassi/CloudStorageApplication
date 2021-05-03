@@ -51,4 +51,10 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
+	@Test
+	public void testHomePageUnauthorizedAccessRedirect(){
+		driver.get(baseURL + "/home");
+		Assertions.assertEquals("Login", driver.getTitle());
+	}
+
 }
