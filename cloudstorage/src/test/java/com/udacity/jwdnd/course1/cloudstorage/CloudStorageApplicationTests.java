@@ -70,11 +70,30 @@ class CloudStorageApplicationTests {
 		String lastName = "testing";
 		String userName = "testing";
 		String password = "testing";
+
 		driver.get(baseURL + "/signup");
-		Assertions.assertEquals("Login", driver.getTitle());
-		Thread.sleep(2000);
-		driver.get(baseURL + "/signup");
-		Assertions.assertEquals("Sign Up", driver.getTitle());
+
+		SignUpPage signupPage = new SignUpPage(driver);
+		signupPage.signUp(firstName, lastName, userName, password);
+
+		Assertions.assertEquals(firstName, signupPage.getFirstNameField());
+		Assertions.assertEquals(lastName, signupPage.getLastNameField());
+		Assertions.assertEquals(userName, signupPage.getUsernameField());
+		Assertions.assertEquals(password, signupPage.getPasswordField());
+
+		Thread.sleep(30000);
+
+		driver.get(baseURL + "/login");
+
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(userName, password);
+
+		Assertions.assertEquals(userName, loginPage.getUsernameField());
+		Assertions.assertEquals(password, loginPage.getPasswordField());
+
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		Thread.sleep(5000);
 	}
 
 }

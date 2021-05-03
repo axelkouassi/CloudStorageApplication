@@ -26,11 +26,31 @@ public class SignUpPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void signup(String firstName, String lastName, String username, String password) {
+    public void signUp(String firstName, String lastName, String username, String password) {
         this.firstNameField.sendKeys(firstName);
         this.lastNameField.sendKeys(lastName);
         this.usernameField.sendKeys(username);
         this.passwordField.sendKeys(password);
         this.submitButton.click();
+    }
+
+    public String getFirstNameField() {
+        return firstNameField.getText();
+    }
+
+    public String getLastNameField() {
+        return lastNameField.getText();
+    }
+
+    public String getUsernameField() {
+        return usernameField.getText();
+    }
+
+    public String getPasswordField() {
+        return passwordField.getText();
+    }
+
+    public WebElement getSubmitButton() {
+        return submitButton;
     }
 }

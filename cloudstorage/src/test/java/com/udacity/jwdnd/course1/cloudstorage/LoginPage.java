@@ -25,4 +25,12 @@ public class LoginPage {
         this.passwordField.sendKeys(password);
         this.submitButton.click();
     }
+
+    public String getUsernameField() {
+        return usernameField.getText();
+    }
+
+    public String getPasswordField() {
+        return passwordField.getText();
+    }
 }
