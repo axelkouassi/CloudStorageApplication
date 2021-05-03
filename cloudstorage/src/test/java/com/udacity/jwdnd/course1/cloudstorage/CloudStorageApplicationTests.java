@@ -40,7 +40,7 @@ class CloudStorageApplicationTests {
 	@AfterEach
 	public void afterEach() throws InterruptedException {
 		if (this.driver != null) {
-			Thread.sleep(5000);
+			Thread.sleep(3000);
 			driver.quit();
 		}
 	}
@@ -51,10 +51,14 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
+	//Write a test that verifies that an unauthorized user can only access the login and signup pages.
 	@Test
-	public void testHomePageUnauthorizedAccessRedirect(){
+	public void testUnauthorizedAccessRestrictions() throws InterruptedException{
 		driver.get(baseURL + "/home");
 		Assertions.assertEquals("Login", driver.getTitle());
+		Thread.sleep(2000);
+		driver.get(baseURL + "/signup");
+		Assertions.assertEquals("Sign Up", driver.getTitle());
 	}
 
 }
