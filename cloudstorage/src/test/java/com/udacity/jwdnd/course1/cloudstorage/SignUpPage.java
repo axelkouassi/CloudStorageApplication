@@ -26,28 +26,32 @@ public class SignUpPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void signUp(String firstName, String lastName, String username, String password) {
+    public void fillSignUp(String firstName, String lastName, String username, String password) {
         this.firstNameField.sendKeys(firstName);
         this.lastNameField.sendKeys(lastName);
         this.usernameField.sendKeys(username);
         this.passwordField.sendKeys(password);
+    }
+
+    public void clickSignUpButton(){
         this.submitButton.click();
     }
 
     public String getFirstNameField() {
-        return firstNameField.getText();
+
+        return firstNameField.getAttribute("value");
     }
 
     public String getLastNameField() {
-        return lastNameField.getText();
+        return lastNameField.getAttribute("value");
     }
 
     public String getUsernameField() {
-        return usernameField.getText();
+        return usernameField.getAttribute("value");
     }
 
     public String getPasswordField() {
-        return passwordField.getText();
+        return passwordField.getAttribute("value");
     }
 
     public WebElement getSubmitButton() {
