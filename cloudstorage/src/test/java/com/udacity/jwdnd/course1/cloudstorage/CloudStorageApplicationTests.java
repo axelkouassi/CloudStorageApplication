@@ -4,12 +4,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class CloudStorageApplicationTests {
 
 	@LocalServerPort
@@ -37,6 +39,7 @@ class CloudStorageApplicationTests {
 //		this.driver = new ChromeDriver();
 		driver = new ChromeDriver();
 		baseURL = "http://localhost:" + port;
+		//wait = new WebDriverWait(driver, 100);
 	}
 
 	@AfterEach
