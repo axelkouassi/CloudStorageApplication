@@ -22,6 +22,9 @@ public class SignUpPage {
     @FindBy(css = "#submit-button")
     private WebElement submitButton;
 
+    @FindBy(css = "#success-msg")
+    private WebElement successMessage;
+
     public SignUpPage(WebDriver webDriver) {
         PageFactory.initElements(webDriver, this);
     }
@@ -57,4 +60,10 @@ public class SignUpPage {
     public WebElement getSubmitButton() {
         return submitButton;
     }
+
+    public String getSuccessMessage() {
+        return successMessage.getAttribute("value");
+    }
+
+
 }

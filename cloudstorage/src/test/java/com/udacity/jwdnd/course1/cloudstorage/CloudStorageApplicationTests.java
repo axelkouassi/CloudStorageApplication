@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
@@ -21,6 +22,12 @@ class CloudStorageApplicationTests {
 	public static WebDriver driver;
 
 	public String baseURL;
+
+	//User registration information
+	String firstName = "A musician";
+	String lastName = "Nicky";
+	String userName = "minaj";
+	String password = "sons";
 
 	@BeforeAll
 	public static void beforeAll() {
@@ -68,14 +75,62 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
+	public void testSuccessfullySignUpUser() throws InterruptedException{
+		// go to signup page
+		driver.get(baseURL + "/signup");
+
+		//Initialize web driver
+		SignUpPage signupPage = new SignUpPage(driver);
+		//Have user fill registration fields
+		signupPage.fillSignUp(firstName, lastName, userName, password);
+
+		//Check user's information filled
+		assertEquals(firstName, signupPage.getFirstNameField());
+		assertEquals(lastName, signupPage.getLastNameField());
+		assertEquals(userName, signupPage.getUsernameField());
+		assertEquals(password, signupPage.getPasswordField());
+
+		//Wait for 5 seconds
+		Thread.sleep(5000);
+
+		//Click signup button
+		signupPage.clickSignUpButton();
+
+		//Assertions.assertTrue(signupPage.getSuccessMessage());
+
+		assertEquals("You successfully signed up! Please continue to the login page."
+				,signupPage.getSuccessMessage());
+
+	}
+
+	@Test
+	public void testSuccessfullyLoginUser() throws InterruptedException{
+		//Go to login page
+		driver.get(baseURL + "/login");
+
+		//Initialize driver for login page
+		LoginPage loginPage = new LoginPage(driver);
+		//Have user fill login fields
+		loginPage.fillLogin(userName, password);
+
+		//Check user's information entered in each field
+		assertEquals(userName, loginPage.getUsernameField());
+		assertEquals(password, loginPage.getPasswordField());
+
+		//Wait for 5 seconds
+		Thread.sleep(5000);
+
+		//Click login button
+		loginPage.clickLoginButton();
+
+		//Check that user has access to home page
+		assertEquals("Home", driver.getTitle());
+
+	}
+
+	@Test
 	public void testUserSignUpLoginHomePageAccessLogOutHomePageRestrict()
 			throws InterruptedException{
-
-		//User registration information
-		String firstName = "A musician";
-		String lastName = "Nicky";
-		String userName = "minaj";
-		String password = "sons";
 
 		// go to signup page
 		driver.get(baseURL + "/signup");
@@ -132,6 +187,13 @@ class CloudStorageApplicationTests {
 		//Try accessing home page after logging out
 		driver.get(baseURL + "/home");
 		//Verifies that such attempt redirects user to login page
+		assertEquals("Login", driver.getTitle());
+	}
+
+
+	@Test
+	public void testCreateNoteAndVerifyDisplay() {
+		driver.get(baseURL + "/login");
 		assertEquals("Login", driver.getTitle());
 	}
 
