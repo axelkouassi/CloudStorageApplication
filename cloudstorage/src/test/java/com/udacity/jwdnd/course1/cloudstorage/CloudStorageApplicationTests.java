@@ -71,7 +71,7 @@ class CloudStorageApplicationTests {
 	public void testUserSignUpLoginHomePageAccessLogOutHomePageRestrict()
 			throws InterruptedException{
 
-		String firstName = "Bad Bitch";
+		String firstName = "A musician";
 		String lastName = "Nicky";
 		String userName = "minaj";
 		String password = "sons";
@@ -86,6 +86,8 @@ class CloudStorageApplicationTests {
 		assertEquals(userName, signupPage.getUsernameField());
 		assertEquals(password, signupPage.getPasswordField());
 
+		Thread.sleep(5000);
+
 		signupPage.clickSignUpButton();
 
 		Thread.sleep(5000);
@@ -97,6 +99,8 @@ class CloudStorageApplicationTests {
 
 		assertEquals(userName, loginPage.getUsernameField());
 		assertEquals(password, loginPage.getPasswordField());
+
+		Thread.sleep(5000);
 
 		loginPage.clickLoginButton();
 
