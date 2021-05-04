@@ -71,42 +71,68 @@ class CloudStorageApplicationTests {
 	public void testUserSignUpLoginHomePageAccessLogOutHomePageRestrict()
 			throws InterruptedException{
 
+		//User registration information
 		String firstName = "A musician";
 		String lastName = "Nicky";
 		String userName = "minaj";
 		String password = "sons";
 
+		// go to signup page
 		driver.get(baseURL + "/signup");
 
+		//Initialize web driver
 		SignUpPage signupPage = new SignUpPage(driver);
+		//Have user fill registration fields
 		signupPage.fillSignUp(firstName, lastName, userName, password);
 
+		//Check user's information filled
 		assertEquals(firstName, signupPage.getFirstNameField());
 		assertEquals(lastName, signupPage.getLastNameField());
 		assertEquals(userName, signupPage.getUsernameField());
 		assertEquals(password, signupPage.getPasswordField());
 
+		//Wait for 5 seconds
 		Thread.sleep(5000);
 
+		//Click signup button
 		signupPage.clickSignUpButton();
 
+		//Wait for 5 seconds
 		Thread.sleep(5000);
 
+		//Go to login page
 		driver.get(baseURL + "/login");
 
+		//Initialize driver for login page
 		LoginPage loginPage = new LoginPage(driver);
+		//Have user fill login fields
 		loginPage.fillLogin(userName, password);
 
+		//Check user's information entered in each field
 		assertEquals(userName, loginPage.getUsernameField());
 		assertEquals(password, loginPage.getPasswordField());
 
+		//Wait for 5 seconds
 		Thread.sleep(5000);
 
+		//Click login button
 		loginPage.clickLoginButton();
 
+		//Check that user has access to home page
 		assertEquals("Home", driver.getTitle());
 
+		//Wait for 5 seconds
 		Thread.sleep(5000);
+
+		//Initialize driver for home page
+		HomePage homePage = new HomePage(driver);
+		//Click log out button
+		homePage.clickLogoutButton();
+
+		//Try accessing home page after logging out
+		driver.get(baseURL + "/home");
+		//Verifies that such attempt redirects user to login page
+		assertEquals("Login", driver.getTitle());
 	}
 
 }
