@@ -20,17 +20,20 @@ public class LoginPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void login(String username, String password) {
+    public void fillLogin(String username, String password) {
         this.usernameField.sendKeys(username);
         this.passwordField.sendKeys(password);
+    }
+
+    public void clickLoginButton(){
         this.submitButton.click();
     }
 
     public String getUsernameField() {
-        return usernameField.getText();
+        return usernameField.getAttribute("value");
     }
 
     public String getPasswordField() {
-        return passwordField.getText();
+        return passwordField.getAttribute("value");
     }
 }

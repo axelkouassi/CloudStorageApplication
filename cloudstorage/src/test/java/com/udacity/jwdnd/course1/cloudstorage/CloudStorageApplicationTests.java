@@ -79,22 +79,26 @@ class CloudStorageApplicationTests {
 		driver.get(baseURL + "/signup");
 
 		SignUpPage signupPage = new SignUpPage(driver);
-		signupPage.signUp(firstName, lastName, userName, password);
+		signupPage.fillSignUp(firstName, lastName, userName, password);
 
 		assertEquals(firstName, signupPage.getFirstNameField());
 		assertEquals(lastName, signupPage.getLastNameField());
 		assertEquals(userName, signupPage.getUsernameField());
 		assertEquals(password, signupPage.getPasswordField());
 
-		Thread.sleep(300000);
+		signupPage.clickSignUpButton();
+
+		Thread.sleep(5000);
 
 		driver.get(baseURL + "/login");
 
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login(userName, password);
+		loginPage.fillLogin(userName, password);
 
 		assertEquals(userName, loginPage.getUsernameField());
 		assertEquals(password, loginPage.getPasswordField());
+
+		loginPage.clickLoginButton();
 
 		assertEquals("Home", driver.getTitle());
 
