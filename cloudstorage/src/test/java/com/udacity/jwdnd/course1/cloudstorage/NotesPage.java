@@ -39,7 +39,7 @@ public class NotesPage {
     private WebElement deleteNoteBtn;
 
     @FindBy(id = "note-savechanges-btn")
-    private WebElement submitBtn;
+    private WebElement saveChangesButton;
 
     // driver:
     private final WebDriver driver;
@@ -79,7 +79,7 @@ public class NotesPage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + description + "';", this.noteDescription);
 
         // click on "Save Changes" to submit:
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", this.submitBtn);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", this.saveChangesButton);
     }
 
     // verify that new note title is created:
