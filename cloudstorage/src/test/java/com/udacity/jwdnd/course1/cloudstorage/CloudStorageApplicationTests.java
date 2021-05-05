@@ -1,12 +1,16 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
+import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
+import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -31,6 +35,14 @@ class CloudStorageApplicationTests {
 	String lastName = "Nicky";
 	String userName = "minaj";
 	String password = "sons";
+
+	@Autowired
+	private CredentialService credentialService;
+
+	@Autowired
+	private NoteService noteService;
+
+	private EncryptionService encryptionService;
 
 	@BeforeAll
 	public static void beforeAll() {
@@ -213,5 +225,39 @@ class CloudStorageApplicationTests {
 
 		Thread.sleep(2000);
 	}
+
+	/*Write a test that creates a set of credentials, verifies that they are displayed, and verifies that the displayed password is encrypted.*/
+	@Test
+	public void testCreateCredentialAndVerifyDisplay() throws InterruptedException {
+		testSuccessfullyLoginUser();
+
+		// initialize Encryption service to encrypt/decrypt password
+		// inside add credential and edit credential:
+		encryptionService = new EncryptionService();
+
+		// initialize homepage page:
+		CredentialsPage credentialsPage = new CredentialsPage(driver);
+
+		Thread.sleep(2000);
+
+		// simulate user to click on Credentials tab on nav bar:
+		credentialsPage.clickCredTab();
+
+		Thread.sleep(2000);
+
+		// simulate user to click on Add new credential button:
+		credentialsPage.clickAddCredBtn();
+
+		Thread.sleep(2000);
+
+		// simulate user to add new data to create add credential:
+		credentialsPage.fillCredentialData("cred", "cred", "cred");
+
+		Thread.sleep(2000);
+
+
+
+	}
+
 
 }
