@@ -61,8 +61,8 @@ public class SignUpPage {
         return submitButton;
     }
 
-    public String getSuccessMessage() {
-        return successMessage.getAttribute("value");
+    public boolean getSuccessMessage() {
+        return this.successMessage.isDisplayed();
     }
 
 

@@ -16,6 +16,9 @@ public class LoginPage {
     @FindBy(css="#submit-button")
     private WebElement submitButton;
 
+    @FindBy(css = "#logout-msg")
+    private WebElement logoutMessage;
+
     public LoginPage(WebDriver webDriver) {
         PageFactory.initElements(webDriver, this);
     }
@@ -35,5 +38,9 @@ public class LoginPage {
 
     public String getPasswordField() {
         return passwordField.getAttribute("value");
+    }
+
+    public boolean getLogoutMessage() {
+        return this.logoutMessage.isDisplayed();
     }
 }
