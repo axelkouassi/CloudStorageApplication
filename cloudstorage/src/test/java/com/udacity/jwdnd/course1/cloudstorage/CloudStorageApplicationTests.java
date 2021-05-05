@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
@@ -182,10 +183,35 @@ class CloudStorageApplicationTests {
 	}
 
 
+	//Write a test that creates a note, and verifies it is displayed.
 	@Test
-	public void testCreateNoteAndVerifyDisplay() {
-		driver.get(baseURL + "/login");
-		assertEquals("Login", driver.getTitle());
+	public void testCreateNoteAndVerifyDisplay() throws InterruptedException{
+		testSuccessfullyLoginUser();
+
+		Thread.sleep(2000);
+
+		// initialize homepage page:
+		NotesPage notesPage = new NotesPage(driver);
+
+		// Click Notes tab:
+		notesPage.clickNoteTab();
+
+		Thread.sleep(2000);
+
+		// simulate user to click "Add/Edit a Note" button to add new note:
+		notesPage.clickAddNoteBtn();
+
+		Thread.sleep(2000);
+
+		// fill in data to add a new note:
+		notesPage.fillNoteData("Test Title", "Test Description");
+
+		Thread.sleep(2000);
+
+		// Click Notes tab:
+		notesPage.clickNoteTab();
+
+		Thread.sleep(2000);
 	}
 
 }
