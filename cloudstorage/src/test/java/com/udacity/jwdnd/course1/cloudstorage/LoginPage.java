@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,23 +14,27 @@ public class LoginPage {
     @FindBy(css="#inputPassword")
     private WebElement passwordField;
 
-    @FindBy(css="#submit-button")
-    private WebElement submitButton;
+    @FindBy(css=".login-btn")
+    private WebElement loginButton;
+
+    @FindBy(css = "#error-msg")
+    private WebElement errorMessage;
 
     @FindBy(css = "#logout-msg")
     private WebElement logoutMessage;
 
+    // driver:
+    private final WebDriver driver;
+
     public LoginPage(WebDriver webDriver) {
+
+        this.driver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
 
     public void fillLogin(String username, String password) {
         this.usernameField.sendKeys(username);
         this.passwordField.sendKeys(password);
-    }
-
-    public void clickLoginButton(){
-        this.submitButton.click();
     }
 
     public String getUsernameField() {
@@ -40,7 +45,21 @@ public class LoginPage {
         return passwordField.getAttribute("value");
     }
 
+    public void clickLoginButton(){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", this.loginButton);
+    }
+
+    public boolean getErrorMessage() {
+        return this.errorMessage.isDisplayed();
+    }
+
+
+
     public boolean getLogoutMessage() {
         return this.logoutMessage.isDisplayed();
     }
+
+
 }
+
+

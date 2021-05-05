@@ -12,6 +12,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
@@ -62,13 +63,14 @@ class CloudStorageApplicationTests {
 		assertEquals("Login", driver.getTitle());
 	}
 
-	/*Write a test that verifies that an unauthorized user
-	 can only access the login and signup pages.*/
+	/*Write a test that verifies that an unauthorized user can only access the login and signup pages.*/
 	@Test
 	public void testUnauthorizedAccessRestrictions() throws InterruptedException{
 		driver.get(baseURL + "/home");
 		assertEquals("Login", driver.getTitle());
+
 		Thread.sleep(2000);
+
 		driver.get(baseURL + "/signup");
 		assertEquals("Sign Up", driver.getTitle());
 	}
@@ -126,6 +128,9 @@ class CloudStorageApplicationTests {
 
 	}
 
+	/* Write a test that signs up a new user, logs in,
+	verifies that the home page is accessible, logs out,
+	and verifies that the home page is no longer accessible.*/
 	@Test
 	public void testUserSignUpLoginHomePageAccessLogOutHomePageRestrict()
 			throws InterruptedException{
