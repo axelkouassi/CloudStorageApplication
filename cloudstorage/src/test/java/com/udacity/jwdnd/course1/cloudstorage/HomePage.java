@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePage {
 
+    // logout:
     @FindBy(css=".logout-button")
     private WebElement logoutButton;
 
@@ -20,6 +21,6 @@ public class HomePage {
     }
 
     public void clickLogoutButton(){
-        ( (JavascriptExecutor)driver).executeScript("arguments[0].click;",logoutButton);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", logoutButton);
     }
 }

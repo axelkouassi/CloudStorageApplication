@@ -12,7 +12,7 @@
         <div class="container">
             <div id="logoutDiv">
                 <form action="#" th:action="@{/logout}" method="POST">
-                    <button id="logout-button" type="submit" class=" logout-button btn btn-secondary float-right">Logout</button>
+                    <button type="submit" class="logout-button btn btn-secondary float-right">Logout</button>
                 </form>
             </div>
             <div id="contentDiv" style="clear: right;">
@@ -66,8 +66,10 @@
                             </table>
                         </div>
                     </div>
+
+                    <!--       NOTES             -->
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
+                        <button id="add-note-btn" style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                                 + Add a New Note
                         </button>
                         <div class="table-responsive">
@@ -88,15 +90,15 @@
                                 <tbody>
                                     <tr th:each="note: ${notes}">
                                         <td>
-                                            <button type="button" class="btn btn-success"
+                                            <button id="note-editBtn" type="button" class="btn btn-success"
                                                     th:onclick="showEditNoteModal([[${note.noteId}]],
                                                     [[${note.noteTitle}]], [[${note.noteDescription}]])">Edit
                                             </button>
-                                            <a th:href="@{'home/notes/delete/' + ${note.noteId}}" method="POST"
+                                            <a id="note-deleteBtn" th:href="@{'home/notes/delete/' + ${note.noteId}}" method="POST"
                                                class="btn btn-danger">Delete</a>
                                         </td>
-                                        <th th:text="${note.noteTitle}" scope="row">Example Note Title</th>
-                                        <td th:text="${note.noteDescription}">Example Note Description </td>
+                                        <th th:id="noteTitleText" th:text="${note.noteTitle}" scope="row">Example Note Title</th>
+                                        <td th:id="noteDescriptionText" th:text="${note.noteDescription}">Example Note Description </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -127,7 +129,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#noteEditSubmit').click();">Save changes</button>
+                                        <button id ="note-savechanges-btn" type="button" class="btn btn-primary" onclick="$('#noteEditSubmit').click();">Save changes</button>
                                     </div>
                                 </div>
                             </div>

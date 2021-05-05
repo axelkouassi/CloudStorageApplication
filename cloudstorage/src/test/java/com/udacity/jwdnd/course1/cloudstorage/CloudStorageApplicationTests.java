@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CloudStorageApplicationTests {
 
 	@LocalServerPort
-	private int port;
+	private int port; //random port
 
 //	private WebDriver driver;
 	public static WebDriver driver;
@@ -34,7 +34,6 @@ class CloudStorageApplicationTests {
 	@BeforeAll
 	public static void beforeAll() {
 		WebDriverManager.chromedriver().setup();
-//		driver = new ChromeDriver();
 	}
 
 	@AfterAll
@@ -45,10 +44,8 @@ class CloudStorageApplicationTests {
 
 	@BeforeEach
 	public void beforeEach() {
-//		this.driver = new ChromeDriver();
 		driver = new ChromeDriver();
 		baseURL = "http://localhost:" + port;
-		//wait = new WebDriverWait(driver, 100);
 	}
 
 	@AfterEach
@@ -169,15 +166,15 @@ class CloudStorageApplicationTests {
 		new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Login"));
 
 		assertEquals("Login", driver.getTitle());
-		//assertTrue(loginPage.getLogoutMessage());
+		assertTrue(loginPage.getLogoutMessage());
 
 		Thread.sleep(2000);
 
 		//Try accessing home page after logging out
-		//driver.get(baseURL + "/home");
+		driver.get(baseURL + "/home");
 
 		//Verifies that such attempt redirects user to login page
-		//assertEquals("Login", driver.getTitle());
+		assertEquals("Login", driver.getTitle());
 	}
 
 
