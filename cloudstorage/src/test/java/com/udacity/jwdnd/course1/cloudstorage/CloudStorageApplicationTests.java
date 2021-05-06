@@ -273,6 +273,9 @@ class CloudStorageApplicationTests {
 		//assertEquals(noteTitle, notesPage.getNoteTitleText());
 		//assertEquals(noteDescription, notesPage.getNoteDescriptionText());
 
+		// Click Notes tab:
+		//notesPage.clickNoteTab();
+
 		//Check success message of edited note
 		assertTrue(notesPage.getSuccessMessage());
 
@@ -294,8 +297,11 @@ class CloudStorageApplicationTests {
 
 		Thread.sleep(2000);
 
+		// Click Notes tab:
+		//notesPage.clickNoteTab();
+
 		//Check success message of edited note
-		assertTrue(notesPage.getSuccessMessage());
+		//assertTrue(notesPage.getSuccessMessage());
 
 	}
 
@@ -305,7 +311,6 @@ class CloudStorageApplicationTests {
 		testSuccessfullyLoginUser();
 
 		// initialize Encryption service to encrypt/decrypt password
-		// inside add credential and edit credential:
 		encryptionService = new EncryptionService();
 
 		// initialize homepage page:
@@ -327,6 +332,15 @@ class CloudStorageApplicationTests {
 		credentialsPage.fillCredentialData("cred", "cred", "cred");
 
 		Thread.sleep(2000);
+
+		// simulate click to submit:
+		credentialsPage.clickSaveChangesBtn();
+
+		Thread.sleep(2000);
+
+		//Check success message of new credential created
+		assertTrue(credentialsPage.getSuccessMessage());
+
 
 
 

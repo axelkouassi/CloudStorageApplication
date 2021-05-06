@@ -53,6 +53,9 @@ public class CredentialsPage {
     @FindBy(id = "cred-savechanges-btn")
     private WebElement submitBtn;
 
+    @FindBy(id = "success-message3")
+    private WebElement successMessage;
+
     // driver (Chrome):
     private final WebDriver driver;
 
@@ -60,6 +63,20 @@ public class CredentialsPage {
     public CredentialsPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
+
+    // method to fill data to add new credentials:
+    public void fillCredentialData(String url, String username, String password) {
+        // fill in data:
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + url + "';", this.credentialUrl);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + username + "';", this.credentialUsername);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + password + "';", this.credentialPassword);
+    }
+
+    // method to click on Add New Credential button:
+    public void clickSaveChangesBtn() {
+        // simulate click to submit:
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", this.submitBtn);
     }
 
     // method to simulate user to click on Credentials tab:
@@ -82,15 +99,6 @@ public class CredentialsPage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", this.deleteBtn);
     }
 
-    // method to fill data to add new credentials:
-    public void fillCredentialData(String url, String username, String password) {
-        // fill in data:
-        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + url + "';", this.credentialUrl);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + username + "';", this.credentialUsername);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + password + "';", this.credentialPassword);
-        // simulate click to submit:
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", this.submitBtn);
-    }
 
     // verify that new credential's url is created:
     public String getUrlText() {
@@ -112,5 +120,10 @@ public class CredentialsPage {
     // get unencrypted password:
     public String getUnencryptedPassword() {
         return this.credentialPassword.getAttribute("value");
+    }
+
+    //Get success message
+    public boolean getSuccessMessage() {
+        return this.successMessage.isDisplayed();
     }
 }
