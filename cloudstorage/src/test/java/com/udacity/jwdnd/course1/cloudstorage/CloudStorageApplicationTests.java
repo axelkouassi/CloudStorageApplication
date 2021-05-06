@@ -216,6 +216,9 @@ class CloudStorageApplicationTests {
 		// Click Notes tab:
 		notesPage.clickNoteTab();
 
+		//Verifies that we are at home/notes
+		//assertEquals(baseURL+"/home/notes", driver.getCurrentUrl());
+
 		Thread.sleep(2000);
 
 		// simulate user to click "Add/Edit a Note" button to add new note:
@@ -226,23 +229,20 @@ class CloudStorageApplicationTests {
 		// fill in data to add a new note:
 		notesPage.addNote(noteTitle, noteDescription);
 
-		// test if new note's title and description match:
-		//assertEquals(noteTitle, notesPage.getNoteTitleText());
-		//assertEquals(noteDescription, notesPage.getNoteDescriptionText());
-
 		Thread.sleep(2000);
 
 		// Click save button to save changes:
 		notesPage.clickSaveNoteBtn();
 
-		//Check success message of note added
-		assertTrue(notesPage.getSuccessMessage());
-
-		//Verifies that we are at home/notes
-		//assertEquals(baseURL+"/home/notes", driver.getCurrentUrl());
+		// test if new note's title and description match:
+		//assertEquals(noteTitle, notesPage.getNoteTitleText());
+		//assertEquals(noteDescription, notesPage.getNoteDescriptionText());
 
 		// Click Notes tab:
-		//notesPage.clickNoteTab();
+		notesPage.clickNoteTab();
+
+		//Check success message of note added
+		assertTrue(notesPage.getSuccessMessage());
 	}
 
 	//Write a test that edits an existing note and verifies that the changes are displayed.
@@ -269,12 +269,33 @@ class CloudStorageApplicationTests {
 		// Click save button to save changes:
 		notesPage.clickSaveEditNoteBtn();
 
-		//Thread.sleep(2000);
+		// test if new note's title and description match:
+		//assertEquals(noteTitle, notesPage.getNoteTitleText());
+		//assertEquals(noteDescription, notesPage.getNoteDescriptionText());
 
 		//Check success message of edited note
 		assertTrue(notesPage.getSuccessMessage());
 
+	}
 
+	//Write a test that deletes a note and verifies that the note is no longer displayed.
+	@Test
+	public void testDeleteNoteAndVerifyDisplay() throws InterruptedException{
+
+		testCreateNoteAndVerifyDisplay();
+
+		// initialize homepage page:
+		NotesPage notesPage = new NotesPage(driver);
+
+		Thread.sleep(2000);
+
+		// simulate user to click on "Edit" button:
+		notesPage.clickDeleteBtn();
+
+		Thread.sleep(2000);
+
+		//Check success message of edited note
+		assertTrue(notesPage.getSuccessMessage());
 
 	}
 

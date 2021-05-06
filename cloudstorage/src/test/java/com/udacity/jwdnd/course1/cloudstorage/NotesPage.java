@@ -52,7 +52,7 @@ public class NotesPage {
     @FindBy(id = "note-deleteBtn")
     private WebElement deleteNoteBtn;
 
-    @FindBy(css = "#success-message")
+    @FindBy(id = "success-message")
     private WebElement successMessage;
 
 
