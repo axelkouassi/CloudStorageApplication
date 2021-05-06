@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credentials;
 import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
@@ -323,7 +324,7 @@ class CloudStorageApplicationTests {
 		Thread.sleep(2000);
 
 		// simulate user to add a set of 3 credentials:
-		for (int i = 0; i++ < 3;){
+		for (int i = 1; i < 4;i++){
 
 			// simulate user to click on Add new credential button:
 			credentialsPage.clickAddCredBtn();
@@ -335,6 +336,17 @@ class CloudStorageApplicationTests {
 			// simulate click to submit:
 			credentialsPage.clickSaveChangesBtn();
 			Thread.sleep(2000);
+
+			// initialize Credential object:
+			// since this is a test, just get the very first value of data displayed on screen:
+			//Credentials credential = this.credentialService.getCredentialById(i);
+
+			//new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Home"));
+
+			// test if new credential url, username, and password match:
+			//assertEquals("cred "+i, credentialsPage.getUrlText());
+			//assertEquals("cred"+i, credentialsPage.getUsernameText());
+			//assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText());
 		}
 
 		Thread.sleep(2000);
