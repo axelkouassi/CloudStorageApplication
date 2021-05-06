@@ -18,14 +18,16 @@ public class NotesPage {
     @FindBy(id = "note-title")
     private WebElement noteTitle;
 
-    @FindBy(xpath = "//*[@id='noteTitleText']")
+    //@FindBy(xpath = "//*[@id='noteTitleText']")
+    @FindBy(xpath = "noteTitleText")
     private WebElement noteTitleText;
 
     // description:
     @FindBy(id = "note-description")
     private WebElement noteDescription;
 
-    @FindBy(xpath = "//*[@id='noteDescriptionText']")
+    //@FindBy(xpath = "//*[@id='noteDescriptionText']")
+    @FindBy(id = "noteDescriptionText")
     private WebElement noteDescriptionText;
 
     // buttons:

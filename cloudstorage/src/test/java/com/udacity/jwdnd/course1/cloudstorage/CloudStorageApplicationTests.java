@@ -30,11 +30,15 @@ class CloudStorageApplicationTests {
 
 	public String baseURL;
 
-	//User registration information
+	//Sample User registration information
 	String firstName = "A musician";
 	String lastName = "Nicky";
 	String userName = "minaj";
 	String password = "sons";
+
+	//Sample Note information
+	String noteTitle = "Note Title";
+	String noteDescription = "Note Description";
 
 	@Autowired
 	private CredentialService credentialService;
@@ -219,11 +223,11 @@ class CloudStorageApplicationTests {
 		Thread.sleep(2000);
 
 		// fill in data to add a new note:
-		notesPage.fillNoteData("Test Title", "Test Description");
+		notesPage.fillNoteData(noteTitle, noteDescription);
 
 		// test if new note's title and description match:
-		assertEquals("Test Title", notesPage.getNoteTitleText());
-		assertEquals("Test Description", notesPage.getNoteDescriptionText());
+		assertEquals(noteTitle, notesPage.getNoteTitleText());
+		assertEquals(noteDescription, notesPage.getNoteDescriptionText());
 
 		Thread.sleep(2000);
 
@@ -233,7 +237,7 @@ class CloudStorageApplicationTests {
 		Thread.sleep(2000);
 
 		// Click Notes tab:
-		//notesPage.clickNoteTab();
+		notesPage.clickNoteTab();
 
 		Thread.sleep(2000);
 	}
