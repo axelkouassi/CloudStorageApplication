@@ -40,6 +40,10 @@ class CloudStorageApplicationTests {
 	String noteTitle = "Note Title";
 	String noteDescription = "Note Description";
 
+	//Sample Note edit information
+	String noteTitleEdited = noteTitle + " edited";
+	String noteDescriptionEdited = noteDescription + " edited";
+
 	@Autowired
 	private CredentialService credentialService;
 
@@ -220,7 +224,7 @@ class CloudStorageApplicationTests {
 		Thread.sleep(2000);
 
 		// fill in data to add a new note:
-		notesPage.fillNoteData(noteTitle, noteDescription);
+		notesPage.addNote(noteTitle, noteDescription);
 
 		// test if new note's title and description match:
 		//assertEquals(noteTitle, notesPage.getNoteTitleText());
@@ -231,7 +235,7 @@ class CloudStorageApplicationTests {
 		// Click save button to save changes:
 		notesPage.clickSaveNoteBtn();
 
-		//Check success message
+		//Check success message of note added
 		assertTrue(notesPage.getSuccessMessage());
 
 		//Verifies that we are at home/notes
@@ -239,8 +243,39 @@ class CloudStorageApplicationTests {
 
 		// Click Notes tab:
 		//notesPage.clickNoteTab();
+	}
+
+	//Write a test that edits an existing note and verifies that the changes are displayed.
+	@Test
+	public void testEditNoteAndVerifyDisplay() throws InterruptedException{
+
+		testCreateNoteAndVerifyDisplay();
+
+		// initialize homepage page:
+		NotesPage notesPage = new NotesPage(driver);
 
 		Thread.sleep(2000);
+
+		// simulate user to click on "Edit" button:
+		notesPage.clickEditBtn();
+
+		Thread.sleep(2000);
+
+		// simulate user to editing note with new data:
+		notesPage.editNote(noteTitle + " Edit", noteDescription + " Edit");
+
+		Thread.sleep(2000);
+
+		// Click save button to save changes:
+		notesPage.clickSaveEditNoteBtn();
+
+		//Thread.sleep(2000);
+
+		//Check success message of edited note
+		assertTrue(notesPage.getSuccessMessage());
+
+
+
 	}
 
 	/*Write a test that creates a set of credentials, verifies that they are displayed, and verifies that the displayed password is encrypted.*/

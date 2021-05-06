@@ -18,6 +18,9 @@ public class NotesPage {
     @FindBy(id = "note-title")
     private WebElement noteTitle;
 
+    @FindBy(id = "note-title-edit")
+    private WebElement noteTitleEdit;
+
     //@FindBy(xpath = "//*[@id='noteTitleText']")
     @FindBy(xpath = "noteTitleText")
     private WebElement noteTitleText;
@@ -25,6 +28,9 @@ public class NotesPage {
     // description:
     @FindBy(id = "note-description")
     private WebElement noteDescription;
+
+    @FindBy(id = "note-description-edit")
+    private WebElement noteDescriptionEdit;
 
     //@FindBy(xpath = "//*[@id='noteDescriptionText']")
     @FindBy(id = "noteDescriptionText")
@@ -40,7 +46,7 @@ public class NotesPage {
     @FindBy(id = "note-editBtn")
     private WebElement editNoteBtn;
 
-    @FindBy(id = "note-savechanges-button")
+    @FindBy(id = "note-savechanges-btn")
     private WebElement saveEditNoteButton;
 
     @FindBy(id = "note-deleteBtn")
@@ -62,11 +68,18 @@ public class NotesPage {
 
     /** define methods */
 
-    // method to fill data for note. Use both for Add and Edit Test:
-    public void fillNoteData(String title, String description) {
+    // method to add a new note:
+    public void addNote(String title, String description) {
         // fill in data:
         ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + title + "';", this.noteTitle);
         ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + description + "';", this.noteDescription);
+    }
+
+    // method to edit an existing note:
+    public void editNote(String title, String description) {
+        // fill in data:
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + title + "';", this.noteTitleEdit);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + description + "';", this.noteDescriptionEdit);
     }
 
     // method to simulate user to click on Notes tab:
