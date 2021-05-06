@@ -309,6 +309,7 @@ class CloudStorageApplicationTests {
 	@Test
 	public void testCreateCredentialAndVerifyDisplay() throws InterruptedException {
 		testSuccessfullyLoginUser();
+		Thread.sleep(2000);
 
 		// initialize Encryption service to encrypt/decrypt password
 		encryptionService = new EncryptionService();
@@ -316,25 +317,25 @@ class CloudStorageApplicationTests {
 		// initialize homepage page:
 		CredentialsPage credentialsPage = new CredentialsPage(driver);
 
-		Thread.sleep(2000);
 
 		// simulate user to click on Credentials tab on nav bar:
 		credentialsPage.clickCredTab();
-
 		Thread.sleep(2000);
 
-		// simulate user to click on Add new credential button:
-		credentialsPage.clickAddCredBtn();
+		// simulate user to add a set of 3 credentials:
+		for (int i = 0; i++ < 3;){
 
-		Thread.sleep(2000);
+			// simulate user to click on Add new credential button:
+			credentialsPage.clickAddCredBtn();
+			Thread.sleep(2000);
 
-		// simulate user to add new data to create add credential:
-		credentialsPage.fillCredentialData("cred", "cred", "cred");
+			credentialsPage.fillCredentialData("cred "+i , "cred"+i, "cred"+i);
+			Thread.sleep(2000);
 
-		Thread.sleep(2000);
-
-		// simulate click to submit:
-		credentialsPage.clickSaveChangesBtn();
+			// simulate click to submit:
+			credentialsPage.clickSaveChangesBtn();
+			Thread.sleep(2000);
+		}
 
 		Thread.sleep(2000);
 
