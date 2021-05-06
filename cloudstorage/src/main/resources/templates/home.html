@@ -104,6 +104,7 @@
                             </table>
                         </div>
 
+                        <!-- Edit Note Modal -->
                         <div class="modal fade" id="noteModalEdit" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -118,11 +119,11 @@
                                             <input type="hidden" name="noteId" id="note-id-edit">
                                             <div class="form-group">
                                                 <label for="note-title-edit" class="col-form-label">Title</label>
-                                                <input type="text" name= "noteTitle" class="form-control" id="note-title-edit" maxlength="20" required>
+                                                <input id="note-title-edit" type="text" name= "noteTitle" class="form-control"  maxlength="20" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="note-description-edit" class="col-form-label">Description</label>
-                                                <textarea class="form-control" name="noteDescription" id="note-description-edit" rows="5" maxlength="1000" required></textarea>
+                                                <textarea id="note-description-edit" class="form-control" name="noteDescription"  rows="5" maxlength="1000" required></textarea>
                                             </div>
                                             <button id="noteEditSubmit" type="submit" class="d-none"></button>
                                         </form>
@@ -134,6 +135,40 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Add Note Modal -->
+                        <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="noteModalLabel">Note</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="#" th:action="@{'home/notes'}" method="POST">
+                                            <input type="hidden" name="noteId" id="note-id">
+                                            <div class="form-group">
+                                                <label for="note-title" class="col-form-label">Title</label>
+                                                <input id="note-title" type="text" name= "noteTitle" class="form-control"  maxlength="20" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="note-description-edit" class="col-form-label">Description</label>
+                                                <textarea id="note-description" class="form-control" name="noteDescription"  rows="5" maxlength="1000" required></textarea>
+                                            </div>
+                                            <button id="noteSubmit" type="submit" class="d-none"></button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button id ="note-save-button" type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     </div>
 
                     <!--       CREDENTIALS             -->

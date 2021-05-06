@@ -208,6 +208,9 @@ class CloudStorageApplicationTests {
 		// Click Notes tab:
 		notesPage.clickNoteTab();
 
+		//Verifies that we are at home/notes
+		//assertEquals("Home/Notes", driver.getTitle());
+
 		Thread.sleep(2000);
 
 		// simulate user to click "Add/Edit a Note" button to add new note:
@@ -218,10 +221,19 @@ class CloudStorageApplicationTests {
 		// fill in data to add a new note:
 		notesPage.fillNoteData("Test Title", "Test Description");
 
+		// test if new note's title and description match:
+		assertEquals("Test Title", notesPage.getNoteTitleText());
+		assertEquals("Test Description", notesPage.getNoteDescriptionText());
+
+		Thread.sleep(2000);
+
+		// Click save button to save changes:
+		notesPage.clickSaveNoteBtn();
+
 		Thread.sleep(2000);
 
 		// Click Notes tab:
-		notesPage.clickNoteTab();
+		//notesPage.clickNoteTab();
 
 		Thread.sleep(2000);
 	}
