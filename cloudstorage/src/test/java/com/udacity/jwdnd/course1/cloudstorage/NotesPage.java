@@ -46,6 +46,9 @@ public class NotesPage {
     @FindBy(id = "note-deleteBtn")
     private WebElement deleteNoteBtn;
 
+    @FindBy(css = "#success-message")
+    private WebElement successMessage;
+
 
 
     // driver:
@@ -109,6 +112,11 @@ public class NotesPage {
     // simulate user to click logout button:
     public void logout() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", this.logoutButton);
+    }
+
+    //Get success message
+    public boolean getSuccessMessage() {
+        return this.successMessage.isDisplayed();
     }
 
 
