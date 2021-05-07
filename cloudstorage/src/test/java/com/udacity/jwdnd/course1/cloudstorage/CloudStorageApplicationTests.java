@@ -122,9 +122,9 @@ class CloudStorageApplicationTests {
 		Thread.sleep(2000);
 
 		//Check that user has been redirected to login page
-		//new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Login"));
+		new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Login"));
 
-		//assertEquals("Login", driver.getTitle());
+		assertEquals("Login", driver.getTitle());
 
 		//assertTrue(signupPage.getSuccessMessage());
 
