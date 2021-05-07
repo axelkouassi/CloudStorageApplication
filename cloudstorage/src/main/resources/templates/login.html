@@ -14,8 +14,8 @@
             <form action="#"  th:action="@{/login}" method="POST">
 
                 <!-- Successful registration message display -->
-                <div id="success-msg" th:if="${param.signupSuccess}" class="alert alert-dark" >
-                    You successfully signed up!
+                <div class="alert alert-success fill-parent" th:if="${param.success}">
+                    <span id="success-message" th:text="${param.message}">Success Message</span>
                 </div>
 
                 <div id="error-msg" th:if="${param.error}" class="alert alert-danger">
