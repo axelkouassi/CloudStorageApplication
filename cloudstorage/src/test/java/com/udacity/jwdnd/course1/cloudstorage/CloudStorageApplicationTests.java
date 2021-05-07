@@ -381,7 +381,7 @@ class CloudStorageApplicationTests {
 		credentialsPage.clickCredTab();
 		Thread.sleep(2000);
 
-		/*// simulate user to add a set of 3 credentials:
+		// simulate user to add a set of 3 credentials:
 		for (int i = 1; i < 4;i++){
 
 			// simulate user to click on Add new credential button:
@@ -395,19 +395,18 @@ class CloudStorageApplicationTests {
 			credentialsPage.clickSaveChangesBtn();
 			Thread.sleep(2000);
 
-			// initialize Credential object:
-			// since this is a test, just get the very first value of data displayed on screen:
-			//Credentials credential = this.credentialService.getCredentialById(i);
+			// initialize Credential object
+			Credentials credential = this.credentialService.getCredentialById(i);
 
-			//new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Home"));
+			new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Home"));
 
 			// test if new credential url, username, and password match:
-			//assertEquals("cred "+i, credentialsPage.getUrlText());
-			//assertEquals("cred"+i, credentialsPage.getUsernameText());
-			//assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText());
-		}*/
+			assertEquals("cred "+i, credentialsPage.getUrlText());
+			assertEquals("cred"+i, credentialsPage.getUsernameText());
+			assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText());
+		}
 
-		// simulate user to click on Add new credential button:
+		/*// simulate user to click on Add new credential button:
 		credentialsPage.clickEditBtn();
 		Thread.sleep(2000);
 
@@ -416,7 +415,7 @@ class CloudStorageApplicationTests {
 
 		// simulate click to submit:
 		credentialsPage.clickSaveChangesBtn();
-		Thread.sleep(2000);
+		Thread.sleep(2000);*/
 
 		//Check success message of new credential created
 		assertTrue(credentialsPage.getSuccessMessage());
