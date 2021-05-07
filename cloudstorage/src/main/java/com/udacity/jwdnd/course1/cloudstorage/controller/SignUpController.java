@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static com.udacity.jwdnd.course1.cloudstorage.constants.Constants.*;
+
 @Controller()
 @RequestMapping("/signup")
 public class SignUpController {
@@ -29,13 +31,13 @@ public class SignUpController {
         String signupError = null;
 
         if (!userService.isUsernameAvailable(user.getUsername())) {
-            signupError = "The username already exists.";
+            signupError = EXISTING_USER_ERROR;
         }
 
         if (signupError == null) {
             int rowsAdded = userService.createUser(user);
             if (rowsAdded < 0) {
-                signupError = "There was an error signing you up. Please try again.";
+                signupError = SIGNUP_ERROR;
             }
         }
 
