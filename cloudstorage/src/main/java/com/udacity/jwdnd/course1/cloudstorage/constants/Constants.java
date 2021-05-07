@@ -9,5 +9,5 @@ public final class Constants {
     public static final  String EXISTING_USER_ERROR = "The username already exists!";
 
     public static final  String SIGNUP_ERROR = "There was an error signing you up. Please try again!";
-    public static final  String SIGNUP_SUCCESS = "You have been successfully registered!";
+    public static final  String SIGNUP_SUCCESS = "You successfully signed up!";
 }
