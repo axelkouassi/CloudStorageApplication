@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import static com.udacity.jwdnd.course1.cloudstorage.constants.Constants.*;
+
 @Controller
 public class CredentialController {
 
@@ -35,20 +37,20 @@ public class CredentialController {
             if (credential.getCredentialId() == null) {
                 credentialService.addCredential(credential);
                 redirectAttributes.addAttribute("success", true);
-                redirectAttributes.addAttribute("message", "New credential created for " +
+                redirectAttributes.addAttribute("message", NEW_CREDENTIALS +
                         credential.getUrl() + " .");
             } else {
                 try{
                     credentialService.editCredential(credential);
                     redirectAttributes.addAttribute("success", true);
-                    redirectAttributes.addAttribute("message", "Credentials for " +
-                            credential.getUrl() + " have been edited!");
+                    redirectAttributes.addAttribute("message", CREDENTIALS_EDIT +
+                            credential.getUrl() + " have been " + EDITED);
 
                     return "redirect:/home";
 
                 }catch (Exception e) {
                     redirectAttributes.addAttribute("error", true);
-                    redirectAttributes.addAttribute("message", "Error editing credentials for " +
+                    redirectAttributes.addAttribute("message", CREDENTIALS_EDIT_ERROR +
                             credential.getUrl() + "!");
 
                     return "redirect:/home";
@@ -57,7 +59,7 @@ public class CredentialController {
             }
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
-            redirectAttributes.addAttribute("message", "Error creating credentials for " +
+            redirectAttributes.addAttribute("message", NEW_CREDENTIALS_ERROR +
                     credential.getUrl() + "!");
         }
 
@@ -79,14 +81,13 @@ public class CredentialController {
             credentialUrl= credentials.getUrl();
             credentialService.deleteCredential(credentialId, currentUserId);
             redirectAttributes.addAttribute("success", true);
-            redirectAttributes.addAttribute("message", "You successfully deleted credentials for "
+            redirectAttributes.addAttribute("message", CREDENTIALS_DELETE_SUCCESS
                     + credentialUrl + " !");
 
         } catch (Exception e) {
 
             redirectAttributes.addAttribute("error", true);
-            redirectAttributes.addAttribute("message",
-                    "There was an error deleting the credentials for " +
+            redirectAttributes.addAttribute("message", CREDENTIALS_DELETE_ERROR +
                             credentialUrl + "!");
         }
 

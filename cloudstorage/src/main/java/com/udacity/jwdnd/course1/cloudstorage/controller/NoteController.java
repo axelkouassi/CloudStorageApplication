@@ -59,7 +59,7 @@ public class NoteController {
         try {
             noteService.editNote(note);
             redirectAttributes.addAttribute("success", true);
-            redirectAttributes.addAttribute("message", NOTE +
+            redirectAttributes.addAttribute("message", NOTE_EDIT +
                     note.getNoteTitle() + EDITED);
             return "redirect:/home";
         } catch (Exception e) {
