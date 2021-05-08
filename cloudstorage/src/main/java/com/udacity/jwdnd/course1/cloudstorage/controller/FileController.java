@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -46,6 +47,11 @@ public class FileController {
                 redirectAttributes.addAttribute("error", true);
                 redirectAttributes.addAttribute("message", NO_FILE_SELECTED);
                 return "redirect:/home";
+            }
+
+            //Check if the file is bigger than 1MB
+            if((file.getSize() > 1000000)) {
+                throw new MaxUploadSizeExceededException(file.getSize());
             }
 
             //Checking if filename already exists
