@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 
+import static com.udacity.jwdnd.course1.cloudstorage.constants.Constants.*;
+
 @Controller
 public class FileController {
 
@@ -42,14 +44,14 @@ public class FileController {
             //Display error message if no file uploaded
             if (file.isEmpty()) {
                 redirectAttributes.addAttribute("error", true);
-                redirectAttributes.addAttribute("message", "Please, choose a file to upload!");
+                redirectAttributes.addAttribute("message", NO_FILE_SELECTED);
                 return "redirect:/home";
             }
 
             //Checking if filename already exists
             if(fileService.isFilenameAvailable(file.getOriginalFilename(),currentUserId)) {
                 redirectAttributes.addAttribute("error", true);
-                redirectAttributes.addAttribute("message", "File name already exists!");
+                redirectAttributes.addAttribute("message", EXISTING_FILE);
                 return "redirect:/home";
             }
 
@@ -58,16 +60,16 @@ public class FileController {
             if(fileId > 0){
                 redirectAttributes.addAttribute("success", true);
                 redirectAttributes.addAttribute("message",
-                        "You successfully uploaded " + file.getOriginalFilename() + "!");
+                        SUCCESSFUL_FILE_UPLOAD + file.getOriginalFilename() + "!");
             } else{
                 redirectAttributes.addAttribute("error", true);
                 redirectAttributes.addAttribute("message",
-                        "There was an error uploading your file. " + file.getOriginalFilename() + "!");
+                        FILE_UPLOAD_ERROR + file.getOriginalFilename() + "!");
             }
         } catch (IOException ioException){
             redirectAttributes.addAttribute("error", true);
             redirectAttributes.addAttribute("message",
-                    "There was an error uploading your file. " + file.getOriginalFilename() + "!");
+                    FILE_UPLOAD_ERROR + file.getOriginalFilename() + "!");
         }
 
         return "redirect:/home";
@@ -81,8 +83,8 @@ public class FileController {
         String fileName = file.getFileName();
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(file.getContentType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
+                .contentType(MediaType.parseMediaType(file.getContentType()))/*inline*/
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+fileName+"\"")
                 .body(file.getFileData());
 
     }

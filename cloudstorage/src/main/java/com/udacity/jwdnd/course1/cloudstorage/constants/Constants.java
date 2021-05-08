@@ -21,4 +21,9 @@ public final class Constants {
     public static final  String NOTE_DELETE_SUCCESS = "You successfully deleted note ";
     public static final  String NOTE_DELETE_ERROR = "There was an error deleting your note ";
 
+    public static final  String NO_FILE_SELECTED = "Please, choose a file to upload!";
+    public static final  String EXISTING_FILE = "File name already exists!";
+    public static final  String SUCCESSFUL_FILE_UPLOAD = "You successfully uploaded ";
+    public static final String FILE_UPLOAD_ERROR = "There was an error uploading your file ";
+
 }
