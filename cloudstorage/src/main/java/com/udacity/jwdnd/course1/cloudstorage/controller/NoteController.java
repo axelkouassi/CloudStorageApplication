@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import static com.udacity.jwdnd.course1.cloudstorage.constants.Constants.*;
+
 @Controller
 public class NoteController {
 
@@ -37,12 +39,12 @@ public class NoteController {
             if (note.getNoteId() == null) {
                 noteService.createNote(note);
                 redirectAttributes.addAttribute("success", true);
-                redirectAttributes.addAttribute("message", "New note " +
-                        note.getNoteTitle() + " created!");
+                redirectAttributes.addAttribute("message", NEW_NOTE +
+                        note.getNoteTitle() + CREATED);
             }
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
-            redirectAttributes.addAttribute("message", "Error creating note " +
+            redirectAttributes.addAttribute("message", NEW_NOTE_ERROR +
                     note.getNoteTitle() + "!");
         }
         return "redirect:/home";
@@ -57,12 +59,12 @@ public class NoteController {
         try {
             noteService.editNote(note);
             redirectAttributes.addAttribute("success", true);
-            redirectAttributes.addAttribute("message", "Note " +
-                    note.getNoteTitle() + " edited!");
+            redirectAttributes.addAttribute("message", NOTE +
+                    note.getNoteTitle() + EDITED);
             return "redirect:/home";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
-            redirectAttributes.addAttribute("message", "Error editing note " +
+            redirectAttributes.addAttribute("message", NOTE_EDIT_ERROR +
                     note.getNoteTitle() + "!");
             return "redirect:/home";
         }
@@ -85,13 +87,13 @@ public class NoteController {
             noteTitle = note.getNoteTitle();
             noteService.deleteNote(noteId, currentUserId);
             redirectAttributes.addAttribute("success", true);
-            redirectAttributes.addAttribute("message", "You successfully deleted note" + noteTitle + " !");
+            redirectAttributes.addAttribute("message", NOTE_DELETE_SUCCESS + noteTitle + " !");
 
         } catch (Exception e) {
 
             redirectAttributes.addAttribute("error", true);
             redirectAttributes.addAttribute("message",
-                    "There was an error deleting your note " +
+                    NOTE_DELETE_ERROR +
                             noteTitle + "!");
         }
 
