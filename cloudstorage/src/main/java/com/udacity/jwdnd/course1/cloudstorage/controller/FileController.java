@@ -55,8 +55,10 @@ public class FileController {
                 return "redirect:/home";
             }
 
+            //Store file information
             Integer fileId = fileService.store(file, currentUserId);
 
+            //Upload file
             if(fileId > 0){
                 redirectAttributes.addAttribute("success", true);
                 redirectAttributes.addAttribute("message",
@@ -75,6 +77,7 @@ public class FileController {
         return "redirect:/home";
     }
 
+    //Download file
     @GetMapping("home/files/view/{fileId}")
     public ResponseEntity viewFile(@PathVariable("fileId") Integer fileId) {
 
@@ -83,12 +86,15 @@ public class FileController {
         String fileName = file.getFileName();
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(file.getContentType()))/*inline*/
+                .contentType(MediaType.parseMediaType(file.getContentType()))
+                /*replace "attachment" with "inline" if you want another browser tab to be opened to view file
+                instead of directly downloading files.*/
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+fileName+"\"")
                 .body(file.getFileData());
 
     }
 
+    //Delete file
     @GetMapping("home/files/delete/{fileId}")
     public String deleteFile(@PathVariable("fileId") Integer fileId,
                                    RedirectAttributes redirectAttributes,
