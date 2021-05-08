@@ -89,10 +89,6 @@ public class FileController {
 
     }
 
-
-
-
-
     @GetMapping("home/files/delete/{fileId}")
     public String deleteFile(@PathVariable("fileId") Integer fileId,
                                    RedirectAttributes redirectAttributes,
@@ -107,14 +103,13 @@ public class FileController {
             fileName = file.getFileName();
             fileService.deleteFile(fileId, currentUserId);
             redirectAttributes.addAttribute("success", true);
-            redirectAttributes.addAttribute("message", "You successfully deleted " +
+            redirectAttributes.addAttribute("message", SUCCESSFUL_FILE_DELETE +
                      fileName + " !");
 
         } catch (Exception e) {
 
             redirectAttributes.addAttribute("error", true);
-            redirectAttributes.addAttribute("message",
-                            "There was an error deleting your file " +
+            redirectAttributes.addAttribute("message", FILE_DELETE_ERROR +
                                     fileName + "!");
         }
 

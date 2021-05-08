@@ -25,5 +25,7 @@ public final class Constants {
     public static final  String EXISTING_FILE = "File name already exists!";
     public static final  String SUCCESSFUL_FILE_UPLOAD = "You successfully uploaded ";
     public static final String FILE_UPLOAD_ERROR = "There was an error uploading your file ";
+    public static final  String SUCCESSFUL_FILE_DELETE= "You successfully deleted ";
+    public static final  String FILE_DELETE_ERROR= "There was an error deleting your file ";
 
 }
