@@ -12,12 +12,10 @@
         <div class="container justify-content-center w-25 p-3" style="background-color: #eeeeee; margin-top: 5em;">
             <h1 class="display-5">Login</h1>
             <form action="#"  th:action="@{/login}" method="POST">
-
                 <!-- Successful registration message display -->
-                <div class="alert alert-success fill-parent" th:if="${param.success}">
-                    <span id="success-message" th:text="${param.message}">Success Message</span>
+                <div class="alert alert-success" th:if="${param.success}">
+                    <span id="success-msg" th:text="${param.message}">Success Message</span>
                 </div>
-
                 <div id="error-msg" th:if="${param.error}" class="alert alert-danger">
                     Invalid username or password!
                 </div>

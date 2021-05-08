@@ -126,7 +126,7 @@ class CloudStorageApplicationTests {
 
 		assertEquals("Login", driver.getTitle());
 
-		//assertTrue(signupPage.getSuccessMessage());
+		assertTrue(signupPage.getSuccessMessage());
 
 	}
 
