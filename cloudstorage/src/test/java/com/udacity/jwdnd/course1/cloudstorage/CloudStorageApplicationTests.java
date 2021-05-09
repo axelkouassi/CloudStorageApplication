@@ -408,7 +408,7 @@ class CloudStorageApplicationTests {
 
 	}
 
-	/*Write a test that deletes an existing set of credentials and verifies that the credentials are no longer displayed.*/
+	/*Write a test that deletes an existing set of 3 credentials and verifies that the credentials are no longer displayed.*/
 	@Test
 	public void testDeleteCredentialAndVerifyDisplay() throws InterruptedException {
 		testCreateCredentialAndVerifyDisplay();
@@ -425,35 +425,16 @@ class CloudStorageApplicationTests {
 		credentialsPage.clickCredTab();
 		Thread.sleep(2000);
 
-		/*// simulate user to add a set of 3 credentials:
-		for (int i = 1; i < 4;i++){
-
-			// simulate user to click on Add new credential button:
-			credentialsPage.clickEditBtn();
-			Thread.sleep(2000);
-
-			credentialsPage.fillCredentialData("cred "+i + " edit" , "cred"+i, "cred"+i);
-			Thread.sleep(2000);
-
-			// simulate click to submit:
-			credentialsPage.clickSaveChangesBtn();
-			Thread.sleep(2000);
+		// simulate user to delete a  set of 3 credentials:
+		for (int i = 1; i < 4; i++){
 
 			// initialize Credential object:
-			// since this is a test, just get the very first value of data displayed on screen:
-			//Credentials credential = this.credentialService.getCredentialById(i);
+			Credentials credential = this.credentialService.getCredentialById(i);
 
-			//new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Home"));
-
-			// test if new credential url, username, and password match:
-			//assertEquals("cred "+i, credentialsPage.getUrlText());
-			//assertEquals("cred"+i, credentialsPage.getUsernameText());
-			//assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText());
-		}*/
-
-		// simulate user to click on Add new credential button:
-		credentialsPage.clickDeleteBtn();
-		Thread.sleep(2000);
+			// simulate user to click delete button to delete credential:
+			credentialsPage.clickDeleteBtn();
+			Thread.sleep(2000);
+		}
 
 		//Check success message of new credential created
 		assertTrue(credentialsPage.getSuccessMessage());
