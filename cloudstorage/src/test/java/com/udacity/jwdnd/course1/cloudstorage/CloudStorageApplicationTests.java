@@ -398,21 +398,10 @@ class CloudStorageApplicationTests {
 			new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Home"));
 
 			// test if new credential url, username, and password match:
-			assertEquals("cred "+i, credentialsPage.getUrlText(i));
-			assertEquals("cred"+i, credentialsPage.getUsernameText(i));
+			assertEquals("cred " + i + " edit", credentialsPage.getUrlText(i));
+			assertEquals("cred" + i, credentialsPage.getUsernameText(i));
 			assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText(i));
 		}
-
-		/*// simulate user to click on Add new credential button:
-		credentialsPage.clickEditBtn();
-		Thread.sleep(2000);
-
-		credentialsPage.fillCredentialData("cred "+ " edit" , "cred", "cred");
-		Thread.sleep(2000);
-
-		// simulate click to submit:
-		credentialsPage.clickSaveChangesBtn();
-		Thread.sleep(2000);*/
 
 		//Check success message of new credential created
 		assertTrue(credentialsPage.getSuccessMessage());

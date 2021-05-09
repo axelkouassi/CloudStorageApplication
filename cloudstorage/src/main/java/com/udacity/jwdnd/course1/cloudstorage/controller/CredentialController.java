@@ -38,7 +38,7 @@ public class CredentialController {
                 credentialService.addCredential(credential);
                 redirectAttributes.addAttribute("success", true);
                 redirectAttributes.addAttribute("message", NEW_CREDENTIALS +
-                        credential.getUrl() + " .");
+                        credential.getUrl() + ".");
             } else {
                 try{
                     credentialService.editCredential(credential);
