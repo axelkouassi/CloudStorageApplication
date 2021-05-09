@@ -351,21 +351,10 @@ class CloudStorageApplicationTests {
 			new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Home"));
 
 			// test if new credential url, username, and password match:
-			assertEquals("cred "+i, credentialsPage.getUrlText());
-			assertEquals("cred"+i, credentialsPage.getUsernameText());
-			assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText());
+			assertEquals("cred "+i, credentialsPage.getUrlText(i));
+			assertEquals("cred"+i, credentialsPage.getUsernameText(i));
+			assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText(i));
 		}
-
-		/*// simulate user to click on Add new credential button:
-		credentialsPage.clickAddCredBtn();
-		Thread.sleep(2000);
-
-		credentialsPage.fillCredentialData("cred ", "cred", "cred");
-		Thread.sleep(2000);
-
-		// simulate click to submit:
-		credentialsPage.clickSaveChangesBtn();
-		Thread.sleep(2000);*/
 
 		//Check success message of new credential created
 		assertTrue(credentialsPage.getSuccessMessage());
@@ -409,9 +398,9 @@ class CloudStorageApplicationTests {
 			new WebDriverWait(driver,4).until(ExpectedConditions.titleIs("Home"));
 
 			// test if new credential url, username, and password match:
-			assertEquals("cred "+i, credentialsPage.getUrlText());
-			assertEquals("cred"+i, credentialsPage.getUsernameText());
-			assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText());
+			assertEquals("cred "+i, credentialsPage.getUrlText(i));
+			assertEquals("cred"+i, credentialsPage.getUsernameText(i));
+			assertEquals(this.encryptionService.encryptValue("cred"+i, credential.getKey()), credentialsPage.getPasswordText(i));
 		}
 
 		/*// simulate user to click on Add new credential button:

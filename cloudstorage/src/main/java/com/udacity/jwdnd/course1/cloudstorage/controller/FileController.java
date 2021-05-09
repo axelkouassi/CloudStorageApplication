@@ -49,7 +49,7 @@ public class FileController {
                 return "redirect:/home";
             }
 
-            //Check if the file is bigger than 1MB
+            //Check if the file is bigger than 1MB and handle exception error
             if((file.getSize() > 1000000)) {
                 throw new MaxUploadSizeExceededException(file.getSize());
             }

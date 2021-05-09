@@ -1,10 +1,13 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class CredentialsPage {
 
@@ -30,14 +33,16 @@ public class CredentialsPage {
     @FindBy(id = "credential-username")
     private WebElement credentialUsername;
 
-    @FindBy(xpath = "//*[@id='credUsernameText']")
+    //@FindBy(xpath = "//*[@id='credUsernameText']")
+    @FindBy(id = "credUsernameText")
     private WebElement credentialUsernameText;
 
     // password field:
     @FindBy(id = "credential-password")
     private WebElement credentialPassword;
 
-    @FindBy(xpath = "//*[@id='credPasswordText']")
+    //@FindBy(xpath = "//*[@id='credPasswordText']")
+    @FindBy(id = "credPasswordText")
     private WebElement credentialPasswordText;
 
     // buttons:
@@ -101,19 +106,22 @@ public class CredentialsPage {
 
 
     // verify that new credential's url is created:
-    public String getUrlText() {
-        return credentialUrlText.getAttribute("innerHTML");
+    public String getUrlText(int pos) {
+        List<WebElement> urls = driver.findElements(By.id("credUrlText"));
+        return urls.get(pos-1).getAttribute("innerHTML");
     }
 
     // verify that new credential's username is created:
-    public String getUsernameText() {
-        return credentialUsernameText.getAttribute("innerHTML");
+    public String getUsernameText(int pos) {
+        List<WebElement> urls = driver.findElements(By.id("credUsernameText"));
+        return urls.get(pos-1).getAttribute("innerHTML");
     }
 
     /* Verify that new credential's password is created:
     this should be the value of ENCRYPTED password:*/
-    public String getPasswordText() {
-        return credentialPasswordText.getAttribute("innerHTML");
+    public String getPasswordText(int pos) {
+        List<WebElement> urls = driver.findElements(By.id("credPasswordText"));
+        return urls.get(pos-1).getAttribute("innerHTML");
     }
 
 
