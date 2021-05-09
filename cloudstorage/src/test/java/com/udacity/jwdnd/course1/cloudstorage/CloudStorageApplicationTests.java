@@ -244,14 +244,13 @@ class CloudStorageApplicationTests {
 		notesPage.clickSaveNoteBtn();
 
 		// test if new note's title and description match:
-		//assertEquals(noteTitle, notesPage.getNoteTitleText());
-		//assertEquals(noteDescription, notesPage.getNoteDescriptionText());
+		assertEquals(noteTitle, notesPage.getNoteTitleText());
+		assertEquals(noteDescription, notesPage.getNoteDescriptionText());
 
-		// Click Notes tab:
-		notesPage.clickNoteTab();
+		Thread.sleep(2000);
 
 		//Check success message of note added
-		assertTrue(notesPage.getSuccessMessage());
+		assertTrue(notesPage.getSuccessMessage2());
 	}
 
 	//Write a test that edits an existing note and verifies that the changes are displayed.

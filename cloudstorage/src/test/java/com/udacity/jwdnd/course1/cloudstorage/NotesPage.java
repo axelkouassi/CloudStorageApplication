@@ -22,7 +22,7 @@ public class NotesPage {
     private WebElement noteTitleEdit;
 
     //@FindBy(xpath = "//*[@id='noteTitleText']")
-    @FindBy(xpath = "noteTitleText")
+    @FindBy(id = "noteTitleText")
     private WebElement noteTitleText;
 
     // description:
