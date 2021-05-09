@@ -306,9 +306,6 @@ class CloudStorageApplicationTests {
 
 		Thread.sleep(2000);
 
-		// Click Notes tab:
-		//notesPage.clickNoteTab();
-
 		//Check success message of edited note
 		assertTrue(notesPage.getSuccessMessage2());
 
