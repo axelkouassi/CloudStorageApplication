@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CloudStorageApplicationTests {
 
 	@LocalServerPort
@@ -79,12 +80,14 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
+	@Order(1)
 	public void testDisplayOfLoginPage() {
 		driver.get(baseURL + "/login");
 		assertEquals("Login", driver.getTitle());
 	}
 
 	/*Write a test that verifies that an unauthorized user can only access the login and signup pages.*/
+	@Order(2)
 	@Test
 	public void testUnauthorizedAccessRestrictions() throws InterruptedException{
 		driver.get(baseURL + "/home");
@@ -97,6 +100,7 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
+	@Order(3)
 	public void testSuccessfullySignUpUser() throws InterruptedException{
 		// go to signup page
 		driver.get(baseURL + "/signup");
@@ -131,9 +135,10 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
+	@Order(4)
 	public void testSuccessfullyLoginUser() throws InterruptedException{
 		// Sign up
-		testSuccessfullySignUpUser();
+		//testSuccessfullySignUpUser();
 		// Go to login page
 		driver.get(baseURL + "/login");
 
@@ -161,11 +166,12 @@ class CloudStorageApplicationTests {
 	verifies that the home page is accessible, logs out,
 	and verifies that the home page is no longer accessible.*/
 	@Test
+	@Order(5)
 	public void testUserSignUpLoginHomePageAccessLogOutHomePageRestrict()
 			throws InterruptedException{
 
 		// Sign up
-		testSuccessfullySignUpUser();
+		//testSuccessfullySignUpUser();
 		// Go to login page
 		driver.get(baseURL + "/login");
 
@@ -214,6 +220,7 @@ class CloudStorageApplicationTests {
 
 	//Write a test that creates a note, and verifies it is displayed.
 	@Test
+	@Order(6)
 	public void testCreateNoteAndVerifyDisplay() throws InterruptedException{
 		testSuccessfullyLoginUser();
 
@@ -255,12 +262,20 @@ class CloudStorageApplicationTests {
 
 	//Write a test that edits an existing note and verifies that the changes are displayed.
 	@Test
+	@Order(7)
 	public void testEditNoteAndVerifyDisplay() throws InterruptedException{
 
-		testCreateNoteAndVerifyDisplay();
+		//testCreateNoteAndVerifyDisplay();
+
+		testSuccessfullyLoginUser();
+
+		Thread.sleep(2000);
 
 		// initialize homepage page:
 		NotesPage notesPage = new NotesPage(driver);
+
+		// Click Notes tab:
+		notesPage.clickNoteTab();
 
 		Thread.sleep(2000);
 
@@ -277,26 +292,33 @@ class CloudStorageApplicationTests {
 		// Click save button to save changes:
 		notesPage.clickSaveEditNoteBtn();
 
-		// test if new note's title and description match:
-		//assertEquals(noteTitle, notesPage.getNoteTitleText());
-		//assertEquals(noteDescription, notesPage.getNoteDescriptionText());
+		Thread.sleep(2000);
 
-		// Click Notes tab:
-		//notesPage.clickNoteTab();
+		// test if new note's title and description match:
+		assertEquals(noteTitle+ " Edit", notesPage.getNoteTitleText());
+		assertEquals(noteDescription+ " Edit", notesPage.getNoteDescriptionText());
 
 		//Check success message of edited note
-		assertTrue(notesPage.getSuccessMessage());
+		assertTrue(notesPage.getSuccessMessage2());
 
 	}
 
 	//Write a test that deletes a note and verifies that the note is no longer displayed.
 	@Test
+	@Order(8)
 	public void testDeleteNoteAndVerifyDisplay() throws InterruptedException{
 
-		testCreateNoteAndVerifyDisplay();
+		//testCreateNoteAndVerifyDisplay();
+
+		testSuccessfullyLoginUser();
+
+		Thread.sleep(2000);
 
 		// initialize homepage page:
 		NotesPage notesPage = new NotesPage(driver);
+
+		// Click Notes tab:
+		notesPage.clickNoteTab();
 
 		Thread.sleep(2000);
 
@@ -312,6 +334,7 @@ class CloudStorageApplicationTests {
 
 	/*Write a test that creates a set of credentials, verifies that they are displayed, and verifies that the displayed password is encrypted.*/
 	@Test
+	@Order(9)
 	public void testCreateCredentialAndVerifyDisplay() throws InterruptedException {
 		testSuccessfullyLoginUser();
 		Thread.sleep(2000);
@@ -359,8 +382,13 @@ class CloudStorageApplicationTests {
 
 	/*Write a test that views an existing set of credentials, verifies that the viewable password is unencrypted, edits the credentials, and verifies that the changes are displayed.*/
 	@Test
+	@Order(10)
 	public void testEditCredentialAndVerifyDisplay() throws InterruptedException {
-		testCreateCredentialAndVerifyDisplay();
+		//testCreateCredentialAndVerifyDisplay();
+		Thread.sleep(2000);
+
+		testSuccessfullyLoginUser();
+
 		Thread.sleep(2000);
 
 		// initialize Encryption service to encrypt/decrypt password
@@ -406,8 +434,13 @@ class CloudStorageApplicationTests {
 
 	/*Write a test that deletes an existing set of 3 credentials and verifies that the credentials are no longer displayed.*/
 	@Test
+	@Order(11)
 	public void testDeleteCredentialAndVerifyDisplay() throws InterruptedException {
-		testCreateCredentialAndVerifyDisplay();
+		//testCreateCredentialAndVerifyDisplay();
+		Thread.sleep(2000);
+
+		testSuccessfullyLoginUser();
+
 		Thread.sleep(2000);
 
 		// initialize Encryption service to encrypt/decrypt password
