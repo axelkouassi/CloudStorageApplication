@@ -95,8 +95,9 @@ public class CredentialsPage {
     }
 
     // method to click on Edit button:
-    public void clickEditBtn() {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", this.editBtn);
+    public void clickEditBtn(int pos) {
+        List < WebElement > editButtons = driver.findElements(By.id("cred-EditBtn"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", editButtons.get(pos - 1));
     }
 
     // method to click on Delete button:

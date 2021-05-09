@@ -382,7 +382,7 @@ class CloudStorageApplicationTests {
 		for (int i = 1; i < 4;i++){
 
 			// simulate user to click on Add new credential button:
-			credentialsPage.clickEditBtn();
+			credentialsPage.clickEditBtn(i);
 			Thread.sleep(2000);
 
 			credentialsPage.fillCredentialData("cred "+i + " edit" , "cred"+i, "cred"+i);
