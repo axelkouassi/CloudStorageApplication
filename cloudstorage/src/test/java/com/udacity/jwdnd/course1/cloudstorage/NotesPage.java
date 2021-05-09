@@ -55,6 +55,9 @@ public class NotesPage {
     @FindBy(id = "success-message")
     private WebElement successMessage;
 
+    @FindBy(id = "success-message2")
+    private WebElement successMessage2;
+
 
 
     // driver:
@@ -130,6 +133,11 @@ public class NotesPage {
     //Get success message
     public boolean getSuccessMessage() {
         return this.successMessage.isDisplayed();
+    }
+
+    //Get success message
+    public boolean getSuccessMessage2() {
+        return this.successMessage2.isDisplayed();
     }
 
 

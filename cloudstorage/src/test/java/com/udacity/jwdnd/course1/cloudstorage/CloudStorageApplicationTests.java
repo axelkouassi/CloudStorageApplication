@@ -310,7 +310,7 @@ class CloudStorageApplicationTests {
 		//notesPage.clickNoteTab();
 
 		//Check success message of edited note
-		assertTrue(notesPage.getSuccessMessage());
+		assertTrue(notesPage.getSuccessMessage2());
 
 	}
 
